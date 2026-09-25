@@ -16,7 +16,7 @@
 
 ## Phase 0: Foundation
 
-### Documentation (Complete)
+### Documentation & Product Experience Lock (Complete)
 - [x] Create AGENTS.md
 - [x] Create PRODUCT.md
 - [x] Create PRD.md
@@ -30,6 +30,14 @@
 - [x] Create DECISIONS.md
 - [x] Create ROADMAP.md
 - [x] Create TODO.md
+- [x] Create PRODUCT_DIRECTION.md (Product Experience Lock)
+- [x] Create PRODUCT_ZERO.md (MVP Scope & 10-Step Golden Path)
+- [x] Create USER_JOURNEY.md (Primary Analyst Journey & Mental Model)
+- [x] Create INFORMATION_ARCHITECTURE.md (Screens & Progressive Disclosure)
+- [x] Create EVIDENCE_MODEL.md (Evidence Taxonomy & Provenance Schema)
+- [x] Create DESIGN_ACCEPTANCE.md (UX Acceptance & Quality Gates)
+- [x] Create DEMO_GOLDEN_PATH.md (3-Minute Judge Demonstration Script)
+- [x] Create PRODUCT_DECISIONS.md (PDEC-001 through PDEC-008 Locked Decisions)
 
 ### Blocking Decisions (Required Before Code)
 - [ ] DEC-001: Python version → `[OPEN QUESTION]`
@@ -42,7 +50,7 @@
 - [ ] DEC-008: Task queue → `[OPEN QUESTION]`
 - [ ] DEC-009: Monorepo vs multi-repo → `[OPEN QUESTION]`
 - [ ] DEC-010: STAC API compliance → `[OPEN QUESTION]`
-- [ ] DEC-011: UI scope for v1 → `[OPEN QUESTION]`
+- [x] DEC-011 / PDEC-001: Product Zero Experience Lock → `[CONFIRMED]` Evidence Engine UX (Product Zero locked)
 - [ ] DEC-012: Package manager → `[OPEN QUESTION]`
 
 ### Project Scaffolding
