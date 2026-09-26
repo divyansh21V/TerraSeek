@@ -1,0 +1,250 @@
+{
+  "type": "FeatureCollection",
+  "context": {
+    "returned": 3,
+    "matched": 47,
+    "limit": 10
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S2B_36RUU_20231215_0_L2A",
+      "collection": "sentinel-2-l2a",
+      "properties": {
+        "datetime": "2023-12-15T08:24:31.024000Z",
+        "eo:cloud_cover": 3.42,
+        "s2:mgrs_tile": "36RUU",
+        "proj:epsg": 32636,
+        "platform": "sentinel-2b",
+        "constellation": "sentinel-2",
+        "instruments": ["msi"],
+        "s2:processing_baseline": "05.10",
+        "s2:product_type": "S2MSI2A",
+        "s2:nodata_pixel_percentage": 0.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[31.65, 29.90], [31.95, 29.90], [31.95, 30.15], [31.65, 30.15], [31.65, 29.90]]
+        ]
+      },
+      "bbox": [31.65, 29.90, 31.95, 30.15],
+      "assets": {
+        "blue": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B02.tif",
+          "title": "Band 2 - Blue - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "green": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B03.tif",
+          "title": "Band 3 - Green - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "red": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B04.tif",
+          "title": "Band 4 - Red - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "nir": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B08.tif",
+          "title": "Band 8 - NIR - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "swir16": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B11.tif",
+          "title": "Band 11 - SWIR (1.6) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "swir22": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/B12.tif",
+          "title": "Band 12 - SWIR (2.2) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "visual": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/TCI.tif",
+          "title": "True color image",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "scl": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/SCL.tif",
+          "title": "Scene classification map (SCL)",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "thumbnail": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231215_0_L2A/thumbnail.jpg",
+          "title": "Thumbnail",
+          "type": "image/jpeg"
+        }
+      }
+    },
+
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S2A_36RUU_20231210_0_L2A",
+      "collection": "sentinel-2-l2a",
+      "properties": {
+        "datetime": "2023-12-10T08:20:15.000000Z",
+        "eo:cloud_cover": 12.8,
+        "s2:mgrs_tile": "36RUU",
+        "proj:epsg": 32636,
+        "platform": "sentinel-2a",
+        "constellation": "sentinel-2",
+        "instruments": ["msi"],
+        "s2:processing_baseline": "05.10",
+        "s2:product_type": "S2MSI2A"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[31.65, 29.90], [31.95, 29.90], [31.95, 30.15], [31.65, 30.15], [31.65, 29.90]]
+        ]
+      },
+      "bbox": [31.65, 29.90, 31.95, 30.15],
+      "assets": {
+        "blue": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B02.tif",
+          "title": "Band 2 - Blue - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "green": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B03.tif",
+          "title": "Band 3 - Green - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "red": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B04.tif",
+          "title": "Band 4 - Red - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "nir": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B08.tif",
+          "title": "Band 8 - NIR - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "swir16": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B11.tif",
+          "title": "Band 11 - SWIR (1.6) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "swir22": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/B12.tif",
+          "title": "Band 12 - SWIR (2.2) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "visual": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/TCI.tif",
+          "title": "True color image",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "scl": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/SCL.tif",
+          "title": "Scene classification map (SCL)",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "thumbnail": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2A_36RUU_20231210_0_L2A/thumbnail.jpg",
+          "title": "Thumbnail",
+          "type": "image/jpeg"
+        }
+      }
+    },
+
+    {
+      "type": "Feature",
+      "stac_version": "1.0.0",
+      "id": "S2B_36RUU_20231205_0_L2A",
+      "collection": "sentinel-2-l2a",
+      "properties": {
+        "datetime": "2023-12-05T08:22:45.000000Z",
+        "eo:cloud_cover": 42.1,
+        "s2:mgrs_tile": "36RUU",
+        "proj:epsg": 32636,
+        "platform": "sentinel-2b",
+        "constellation": "sentinel-2",
+        "instruments": ["msi"],
+        "s2:processing_baseline": "05.10",
+        "s2:product_type": "S2MSI2A"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[31.65, 29.90], [31.95, 29.90], [31.95, 30.15], [31.65, 30.15], [31.65, 29.90]]
+        ]
+      },
+      "bbox": [31.65, 29.90, 31.95, 30.15],
+      "assets": {
+        "blue": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B02.tif",
+          "title": "Band 2 - Blue - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "green": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B03.tif",
+          "title": "Band 3 - Green - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "red": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B04.tif",
+          "title": "Band 4 - Red - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "nir": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B08.tif",
+          "title": "Band 8 - NIR - 10m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "swir16": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B11.tif",
+          "title": "Band 11 - SWIR (1.6) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "swir22": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/B12.tif",
+          "title": "Band 12 - SWIR (2.2) - 20m",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "visual": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/TCI.tif",
+          "title": "True color image",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 10
+        },
+        "scl": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/SCL.tif",
+          "title": "Scene classification map (SCL)",
+          "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+          "gsd": 20
+        },
+        "thumbnail": {
+          "href": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/R/UU/2023/12/S2B_36RUU_20231205_0_L2A/thumbnail.jpg",
+          "title": "Thumbnail",
+          "type": "image/jpeg"
+        }
+      }
+    }
+  ]
+}

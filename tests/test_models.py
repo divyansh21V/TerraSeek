@@ -1,7 +1,9 @@
 """Unit tests for TerraSeek Pydantic models."""
 
 from datetime import date
+# pyrefly: ignore [missing-import]
 import pytest
+# pyrefly: ignore [missing-import]
 from pydantic import ValidationError
 
 from terraseek.models import AnalystDecision, DecisionRequest, InvestigationRequest

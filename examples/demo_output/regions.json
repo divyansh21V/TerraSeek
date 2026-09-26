@@ -1,0 +1,1562 @@
+[
+  {
+    "region_id": "Veg_to_Built_R66",
+    "area_m2": 1000000,
+    "pixel_count": 10000,
+    "change_magnitude": 63068.8203125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10000,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Water_R1",
+    "area_m2": 999600,
+    "pixel_count": 9996,
+    "change_magnitude": 801831.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDWI/MNDWI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 9996,
+    "interpretation": "Likely vegetation-to-water/flooding transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R1",
+    "area_m2": 998600,
+    "pixel_count": 9986,
+    "change_magnitude": 702939.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 9986,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Water_R2",
+    "area_m2": 922200,
+    "pixel_count": 9222,
+    "change_magnitude": 69818.0703125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDWI/MNDWI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 9222,
+    "interpretation": "Likely vegetation-to-water/flooding transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R10",
+    "area_m2": 7300,
+    "pixel_count": 73,
+    "change_magnitude": 24751.73828125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 73,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R4",
+    "area_m2": 5400,
+    "pixel_count": 54,
+    "change_magnitude": 30648.1953125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 54,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R6",
+    "area_m2": 4800,
+    "pixel_count": 48,
+    "change_magnitude": 22984.685546875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 48,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R10",
+    "area_m2": 4300,
+    "pixel_count": 43,
+    "change_magnitude": 706782.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 43,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R7",
+    "area_m2": 4200,
+    "pixel_count": 42,
+    "change_magnitude": 26064.02734375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 42,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R33",
+    "area_m2": 3200,
+    "pixel_count": 32,
+    "change_magnitude": 702837.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 32,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R9",
+    "area_m2": 3000,
+    "pixel_count": 30,
+    "change_magnitude": 22892.5078125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 30,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R59",
+    "area_m2": 2800,
+    "pixel_count": 28,
+    "change_magnitude": 731666.1875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 28,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R17",
+    "area_m2": 2700,
+    "pixel_count": 27,
+    "change_magnitude": 701730.25,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 27,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R51",
+    "area_m2": 2700,
+    "pixel_count": 27,
+    "change_magnitude": 689165.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 27,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R2",
+    "area_m2": 2700,
+    "pixel_count": 27,
+    "change_magnitude": 23234.041015625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 27,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R32",
+    "area_m2": 2500,
+    "pixel_count": 25,
+    "change_magnitude": 737501.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 25,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R5",
+    "area_m2": 2500,
+    "pixel_count": 25,
+    "change_magnitude": 22556.294921875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 25,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R23",
+    "area_m2": 2400,
+    "pixel_count": 24,
+    "change_magnitude": 711315.6875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 24,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R41",
+    "area_m2": 2300,
+    "pixel_count": 23,
+    "change_magnitude": 664757.0625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 23,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R5",
+    "area_m2": 2200,
+    "pixel_count": 22,
+    "change_magnitude": 675931.9375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 22,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R56",
+    "area_m2": 2200,
+    "pixel_count": 22,
+    "change_magnitude": 695090.4375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 22,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R2",
+    "area_m2": 2100,
+    "pixel_count": 21,
+    "change_magnitude": 730026.3125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 21,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R6",
+    "area_m2": 2100,
+    "pixel_count": 21,
+    "change_magnitude": 653889.9375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 21,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R50",
+    "area_m2": 2000,
+    "pixel_count": 20,
+    "change_magnitude": 688430.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 20,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R53",
+    "area_m2": 1900,
+    "pixel_count": 19,
+    "change_magnitude": 692381.6875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 19,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R63",
+    "area_m2": 1900,
+    "pixel_count": 19,
+    "change_magnitude": 658722.75,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 19,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R14",
+    "area_m2": 1800,
+    "pixel_count": 18,
+    "change_magnitude": 686183.125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 18,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R29",
+    "area_m2": 1800,
+    "pixel_count": 18,
+    "change_magnitude": 691290.4375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 18,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R24",
+    "area_m2": 1700,
+    "pixel_count": 17,
+    "change_magnitude": 719431.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 17,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R35",
+    "area_m2": 1700,
+    "pixel_count": 17,
+    "change_magnitude": 702825.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 17,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R47",
+    "area_m2": 1700,
+    "pixel_count": 17,
+    "change_magnitude": 734106.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 17,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R48",
+    "area_m2": 1700,
+    "pixel_count": 17,
+    "change_magnitude": 699869.8125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 17,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R8",
+    "area_m2": 1700,
+    "pixel_count": 17,
+    "change_magnitude": 17709.748046875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 17,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R61",
+    "area_m2": 1600,
+    "pixel_count": 16,
+    "change_magnitude": 748989.375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 16,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R40",
+    "area_m2": 1500,
+    "pixel_count": 15,
+    "change_magnitude": 695086.0625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 15,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R44",
+    "area_m2": 1500,
+    "pixel_count": 15,
+    "change_magnitude": 667646.375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 15,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R64",
+    "area_m2": 1500,
+    "pixel_count": 15,
+    "change_magnitude": 672282.0,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 15,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R9",
+    "area_m2": 1400,
+    "pixel_count": 14,
+    "change_magnitude": 713323.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 14,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R15",
+    "area_m2": 1400,
+    "pixel_count": 14,
+    "change_magnitude": 711566.125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 14,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R46",
+    "area_m2": 1400,
+    "pixel_count": 14,
+    "change_magnitude": 706904.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 14,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R49",
+    "area_m2": 1400,
+    "pixel_count": 14,
+    "change_magnitude": 641932.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 14,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R1",
+    "area_m2": 1300,
+    "pixel_count": 13,
+    "change_magnitude": 736376.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 13,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R8",
+    "area_m2": 1300,
+    "pixel_count": 13,
+    "change_magnitude": 730542.3125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 13,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R4",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 728232.25,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R16",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 683032.4375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R26",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 661214.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R28",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 730057.6875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R30",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 722712.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R37",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 640797.1875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R38",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 676057.0,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R54",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 783488.75,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R62",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 709089.0,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R65",
+    "area_m2": 1200,
+    "pixel_count": 12,
+    "change_magnitude": 660439.25,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 12,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R3",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 766140.375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R11",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 707689.125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R12",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 725670.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R13",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 672389.125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R18",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 676520.25,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R34",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 651417.4375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R42",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 705900.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R43",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 690400.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R57",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 742882.0,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R58",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 669838.375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Water_to_Land_R3",
+    "area_m2": 1100,
+    "pixel_count": 11,
+    "change_magnitude": 24593.044921875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong MNDWI decrease",
+      "Strong NDVI/NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 11,
+    "interpretation": "Likely water-to-land/drying transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R7",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 655285.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R19",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 701462.0,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R20",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 681947.25,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R21",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 668714.5625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R22",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 684806.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R25",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 743864.625,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R27",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 635612.6875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R31",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 815318.1875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R36",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 763536.9375,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R39",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 698656.8125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R45",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 646278.1875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R52",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 698450.875,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R55",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 626111.125,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  },
+  {
+    "region_id": "Veg_to_Built_R60",
+    "area_m2": 1000,
+    "pixel_count": 10,
+    "change_magnitude": 689998.5,
+    "supporting_indices": [
+      "NDVI",
+      "NDWI",
+      "MNDWI",
+      "NDBI"
+    ],
+    "evidence": [
+      "Strong NDVI decrease",
+      "Strong NDBI increase"
+    ],
+    "valid_observation_fraction": 1.0,
+    "spatial_coherence": 10,
+    "interpretation": "Likely vegetation-to-built-surface transition.",
+    "confidence": "strong evidence"
+  }
+]
