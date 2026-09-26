@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraSeek — Earth Observation Evidence Engine</title>
+    <meta name="description" content="Evidence-backed satellite imagery investigation for construction and site-expansion monitoring.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="app-header">
+    <div class="header-brand">
+        <span class="brand-icon">◈</span>
+        <span class="brand-name">TERRASEEK</span>
+        <span class="brand-tag">Evidence Engine</span>
+    </div>
+    <div class="header-status" id="header-status"></div>
+</header>
+
+<!-- ===== STATE: START ===== -->
+<main id="state-start" class="state-panel">
+    <div class="start-container">
+        <div class="start-hero">
+            <h1>Investigate site-scale construction<br>with satellite evidence.</h1>
+            <p class="start-subtitle">
+                TerraSeek identifies candidate construction or built-up expansion
+                and presents ranked evidence for analyst verification.
+                It does <strong>not</strong> autonomously confirm construction.
+            </p>
+        </div>
+
+        <form id="investigate-form" class="investigate-form" autocomplete="off">
+            <div class="form-group">
+                <label for="query-input">Investigation Query</label>
+                <input type="text" id="query-input" placeholder="e.g. Find newly built structures and site expansion activity" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="aoi-select">Area of Interest</label>
+                    <select id="aoi-select" required>
+                        <option value="">Select an area…</option>
+                        <option value="egypt_cairo" data-bbox="29.5,31.0,30.5,32.5">Egypt — Greater Cairo & New Administrative Capital</option>
+                        <option value="amazon_altamira" data-bbox="-4.0,-53.0,-2.5,-51.0">Amazon Basin — Altamira Region</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date-start">Date Start</label>
+                    <input type="date" id="date-start" value="2015-01-01" required>
+                </div>
+                <div class="form-group">
+                    <label for="date-end">Date End</label>
+                    <input type="date" id="date-end" value="2024-01-01" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary" id="btn-investigate">
+                <span class="btn-icon">⬡</span> Investigate
+            </button>
+        </form>
+
+        <div class="start-examples">
+            <p class="examples-label">Try these example investigations:</p>
+            <div class="example-cards">
+                <button class="example-card" data-query="Find newly built structures and urban expansion" data-aoi="egypt_cairo" data-start="2015-01-01" data-end="2024-01-01">
+                    <span class="example-region">Egypt — Cairo Region</span>
+                    <span class="example-text">Find newly built structures and urban expansion</span>
+                </button>
+                <button class="example-card" data-query="Identify large-scale land clearing and construction activity" data-aoi="amazon_altamira" data-start="2014-01-01" data-end="2024-01-01">
+                    <span class="example-region">Amazon — Altamira</span>
+                    <span class="example-text">Identify large-scale land clearing and construction activity</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- ===== STATE: LOADING ===== -->
+<main id="state-loading" class="state-panel" hidden>
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Analysing satellite observations…</p>
+        <p class="loading-sub">Filtering candidates, computing evidence signals.</p>
+    </div>
+</main>
+
+<!-- ===== STATE: RESULTS ===== -->
+<main id="state-results" class="state-panel" hidden>
+    <div class="results-header">
+        <button class="btn-back" id="btn-back-start">← New Investigation</button>
+        <div class="results-meta" id="results-meta"></div>
+    </div>
+    <div class="results-grid" id="results-grid"></div>
+    <div id="no-results" class="no-results" hidden>
+        <p class="no-results-title">No candidates found.</p>
+        <p class="no-results-detail">No observations in the prototype dataset match your query, area, and date range. Try broadening the date range or selecting a different AOI.</p>
+    </div>
+</main>
+
+<!-- ===== STATE: CANDIDATE DETAIL ===== -->
+<main id="state-detail" class="state-panel" hidden>
+    <div class="detail-header">
+        <button class="btn-back" id="btn-back-results">← Back to Results</button>
+        <h2 id="detail-title"></h2>
+        <div class="detail-priority" id="detail-priority"></div>
+    </div>
+
+    <div class="detail-body">
+        <!-- Before / After Comparison -->
+        <section class="detail-section">
+            <h3>Before / After Comparison</h3>
+            <div class="compare-container">
+                <div class="compare-labels">
+                    <span class="compare-label compare-label-before" id="label-before"></span>
+                    <span class="compare-label compare-label-after" id="label-after"></span>
+                </div>
+                <div class="compare-viewport" id="compare-viewport">
+                    <img class="compare-img compare-img-before" id="img-before" alt="Before observation">
+                    <div class="compare-clip" id="compare-clip">
+                        <img class="compare-img compare-img-after" id="img-after" alt="After observation">
+                    </div>
+                    <div class="compare-divider" id="compare-divider"></div>
+                    <div class="compare-fallback" id="compare-fallback" hidden>
+                        <p>⚠ Satellite imagery not available.</p>
+                        <p>NASA Worldview API may be temporarily unreachable.<br>Evidence signals and data below remain valid.</p>
+                    </div>
+                </div>
+                <input type="range" min="0" max="100" value="50" class="compare-slider" id="compare-slider">
+                <div class="compare-sources" id="compare-sources"></div>
+            </div>
+        </section>
+
+        <!-- Ranking Signals -->
+        <section class="detail-section">
+            <h3>Investigation Priority Signals</h3>
+            <div class="signals-grid" id="signals-grid"></div>
+        </section>
+
+        <!-- Evidence: Observed -->
+        <section class="detail-section">
+            <h3><span class="evidence-badge evidence-observed">OBSERVED</span> Direct observations from the dataset</h3>
+            <div class="evidence-list" id="evidence-observed"></div>
+        </section>
+
+        <!-- Evidence: Inferred -->
+        <section class="detail-section">
+            <h3><span class="evidence-badge evidence-inferred">INFERRED</span> Derived signals and interpretation</h3>
+            <div class="evidence-list" id="evidence-inferred"></div>
+        </section>
+
+        <!-- Limitations -->
+        <section class="detail-section">
+            <h3><span class="evidence-badge evidence-limitation">LIMITATION</span> What the system cannot establish</h3>
+            <ul class="limitations-list" id="evidence-limitations"></ul>
+        </section>
+
+        <!-- Timeline -->
+        <section class="detail-section">
+            <h3>Temporal Observations</h3>
+            <div class="timeline" id="timeline"></div>
+        </section>
+
+        <!-- Quality Checks -->
+        <section class="detail-section">
+            <h3>Data Quality Checks</h3>
+            <div class="quality-grid" id="quality-grid"></div>
+        </section>
+
+        <!-- Contextual Evidence -->
+        <section class="detail-section">
+            <h3>Contextual Evidence</h3>
+            <div class="evidence-list" id="evidence-contextual"></div>
+        </section>
+
+        <!-- Warnings -->
+        <section class="detail-section" id="warnings-section" hidden>
+            <h3>⚠ Warnings & Limitations</h3>
+            <ul class="warnings-list" id="warnings-list"></ul>
+        </section>
+
+        <!-- Analyst Decision -->
+        <section class="detail-section decision-section">
+            <h3>Analyst Decision</h3>
+            <p class="decision-prompt">Based on the evidence above, what is your assessment of this candidate?</p>
+            <div class="decision-buttons" id="decision-buttons">
+                <button class="btn-decision btn-confirmed" data-decision="CONFIRMED">✓ Confirmed</button>
+                <button class="btn-decision btn-rejected" data-decision="REJECTED">✕ Rejected</button>
+                <button class="btn-decision btn-deferred" data-decision="DEFERRED">◷ Deferred</button>
+                <button class="btn-decision btn-needs-imagery" data-decision="NEEDS_MORE_IMAGERY">⊕ Needs More Imagery</button>
+            </div>
+            <div class="decision-notes-wrapper">
+                <label for="decision-notes">Notes (optional)</label>
+                <textarea id="decision-notes" rows="2" placeholder="Add notes about this decision…"></textarea>
+            </div>
+            <div class="decision-status" id="decision-status" hidden></div>
+        </section>
+
+        <!-- Export -->
+        <section class="detail-section">
+            <button class="btn-export" id="btn-export">⤓ Export Evidence Package (JSON)</button>
+        </section>
+    </div>
+</main>
+
+<!-- ===== STATE: ERROR ===== -->
+<main id="state-error" class="state-panel" hidden>
+    <div class="error-container">
+        <p class="error-title">Something went wrong</p>
+        <p class="error-detail" id="error-detail"></p>
+        <button class="btn-primary" id="btn-retry">Try Again</button>
+    </div>
+</main>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

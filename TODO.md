@@ -54,10 +54,18 @@
 - [ ] DEC-012: Package manager → `[OPEN QUESTION]`
 
 ### Project Scaffolding
-- [ ] Create pyproject.toml with dependencies
+- [x] Create pyproject.toml with dependencies
+- [x] Create directory structure per AGENTS.md
+- [x] Implement Vertical Slice 1 (End-to-End Evidence Engine MVP)
+  - [x] FastAPI backend (`terraseek/`)
+  - [x] Pydantic evidence data model (`models.py`)
+  - [x] Deterministic signal ranking engine (`ranking.py`)
+  - [x] Service layer and session store (`services.py`)
+  - [x] Local prototype dataset with NASA Worldview MODIS imagery (`demo_data.py`)
+  - [x] Frontend UI with before/after slider, evidence cards, and decision recording (`frontend/`)
+  - [x] Pytest suite (`tests/`) — 14/14 tests passing
 - [ ] Configure ruff (linting + formatting)
 - [ ] Configure mypy
-- [ ] Create directory structure per AGENTS.md
 - [ ] Create .env.example with all expected env vars
 - [ ] Create Dockerfile (dev)
 - [ ] Create docker-compose.yml (dev stack)
