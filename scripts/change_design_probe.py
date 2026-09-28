@@ -5,11 +5,17 @@ import numpy as np
 from scipy import ndimage
 import matplotlib.pyplot as plt
 
-# Import from the existing probe
-from scripts.spectral_analysis_probe import (
-    fetch_stac_item, build_target_grid, load_and_resample, 
-    build_valid_mask, calculate_indices, T1_ID, T2_ID
-)
+try:
+    from scripts.spectral_analysis_probe import (
+        fetch_stac_item, build_target_grid, load_and_resample, 
+        build_valid_mask, calculate_indices, T1_ID, T2_ID
+    )
+except ModuleNotFoundError:
+    # Fallback if run directly inside the scripts directory
+    from spectral_analysis_probe import (
+        fetch_stac_item, build_target_grid, load_and_resample, 
+        build_valid_mask, calculate_indices, T1_ID, T2_ID
+    )
 
 PROBE_DIR = Path("data/probe/change_design")
 PROBE_DIR.mkdir(parents=True, exist_ok=True)
