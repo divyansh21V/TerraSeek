@@ -78,7 +78,7 @@ def investigate_async(request: InvestigationRequest):
     return JobResponse(id=job_id, status="queued")
 
 
-@router.get("/jobs/{job_id}", response_model=JobResponse)
+@router.get("/jobs/{job_id}", response_model=JobResponse, dependencies=[Depends(require_api_key)])
 def job_status(job_id: str):
     job = get_job(job_id)
     if job is None:
@@ -99,7 +99,7 @@ def catalog_search(request: STACSearchRequest):
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
-@router.get("/candidates/{candidate_id}")
+@router.get("/candidates/{candidate_id}", dependencies=[Depends(require_api_key)])
 def get_candidate(
     candidate_id: str,
     investigation_id: str = Query(default=None),
@@ -131,7 +131,7 @@ def submit_decision(request: DecisionRequest):
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
-@router.get("/export/{investigation_id}")
+@router.get("/export/{investigation_id}", dependencies=[Depends(require_api_key)])
 def export(investigation_id: str):
     """Export a complete investigation evidence package as JSON."""
     package = export_investigation(investigation_id)

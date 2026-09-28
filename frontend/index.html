@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TerraSeek | Evidence Engine</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- MapLibre GL JS -->
-    <link href="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.css" rel="stylesheet" />
-    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -59,10 +50,24 @@
 <!-- Main Container -->
 <main class="app-container">
 
+    <section id="screen-login" class="screen active">
+        <div class="login-card">
+            <div class="brand-badge">LOCAL DEMO</div>
+            <h1>Welcome to TerraSeek</h1>
+            <p>Use a local analyst profile to create an auditable investigation. No account or network is required.</p>
+            <form id="login-form">
+                <label for="analyst-name">Analyst name</label>
+                <input id="analyst-name" name="analyst-name" required minlength="2" maxlength="80" placeholder="e.g. Asha Rao" autocomplete="name">
+                <button class="btn-primary btn-block" type="submit">Enter workspace</button>
+            </form>
+            <small>Demo sign-in only. Production deployments must configure real authentication.</small>
+        </div>
+    </section>
+
     <!-- ==========================================
          SCREEN 1: LANDING / QUERY ENGINE
          ========================================== -->
-    <section id="screen-landing" class="screen active">
+    <section id="screen-landing" class="screen">
         <div class="hero-section">
             <h1 class="hero-title">Geospatial Intelligence, <span class="text-gradient">Automated.</span></h1>
             <p class="hero-subtitle">Turn a geospatial question into a reviewable evidence path—without hiding the data quality, uncertainty, or source.</p>
@@ -92,10 +97,8 @@
                         <label>Target AOI</label>
                         <select id="aoi-select">
                             <option value="">Select Region...</option>
-                            <option value="mumbai_coastal">India: Mumbai Coastal Road</option>
-                            <option value="himalayan_dam">India: Dibang Valley Dam</option>
-                            <option value="sundarbans">India: Sundarbans Degradation</option>
-                            <option value="punjab_agri">India: Punjab Crop Burning</option>
+                            <option value="egypt_cairo">Egypt: Greater Cairo development</option>
+                            <option value="amazon_altamira">Amazon: Altamira land clearing</option>
                         </select>
                     </div>
                     <div class="param-group">
@@ -132,21 +135,21 @@
 
             <!-- Suggestion Cards -->
             <div class="suggestions-grid">
-                <div class="suggestion-card" data-aoi="mumbai_coastal" data-query="Identify new coastal land reclamation and marine infrastructure development along the western seaboard of Mumbai." data-start="2021-02-15" data-end="2024-03-10">
-                    <img class="sugg-thumb" src="/assets/before.png" alt="Satellite change overview for Mumbai coastline">
-                    <div class="sugg-text">Mumbai Coastal Reclamation</div>
+                <div class="suggestion-card" data-aoi="egypt_cairo" data-query="Identify persistent urban development in Greater Cairo between 2016 and 2023." data-start="2015-01-01" data-end="2024-12-31">
+                    <img class="sugg-thumb" src="/data/probe/before_rgb.png" alt="Sentinel-2 baseline image for the urban development probe">
+                    <div class="sugg-text">Cairo Urban Expansion</div>
                 </div>
-                <div class="suggestion-card" data-aoi="himalayan_dam" data-query="Detect early-stage earthmoving, access roads, and river diversion for hydroelectric dam construction in Arunachal Pradesh." data-start="2022-10-05" data-end="2024-04-22">
-                    <img class="sugg-thumb" src="/assets/change_map.png" alt="Detected change regions in a satellite scene">
-                    <div class="sugg-text">Himalayan Dam Construction</div>
+                <div class="suggestion-card" data-aoi="amazon_altamira" data-query="Detect persistent forest clearing near Altamira in the Amazon between 2015 and 2023." data-start="2014-01-01" data-end="2024-12-31">
+                    <img class="sugg-thumb" src="/data/probe/change_detection/final_change_mask.png" alt="Detected change mask for the satellite evidence probe">
+                    <div class="sugg-text">Amazon Land Clearing</div>
                 </div>
-                <div class="suggestion-card" data-aoi="punjab_agri" data-query="Map thermal anomalies and agricultural stubble burning patterns post-harvest in Punjab." data-start="2023-10-15" data-end="2023-11-10">
-                    <img class="sugg-thumb" src="/assets/ndvi_delta.png" alt="Vegetation index difference map">
-                    <div class="sugg-text">Punjab Crop Fires</div>
+                <div class="suggestion-card" data-aoi="amazon_altamira" data-query="Compare vegetation change and possible smoke confounders in the Amazon." data-start="2014-01-01" data-end="2024-12-31">
+                    <img class="sugg-thumb" src="/data/probe/change_design/z_robust_delta_ndvi.png" alt="Robust vegetation change index for the satellite evidence probe">
+                    <div class="sugg-text">Vegetation Change Review</div>
                 </div>
-                <div class="suggestion-card" data-aoi="sundarbans" data-query="Assess mangrove canopy degradation and illegal aquaculture expansion in the Sundarbans reserve." data-start="2021-11-10" data-end="2024-02-18">
-                    <img class="sugg-thumb" src="/assets/after.png" alt="Satellite observation of land cover change">
-                    <div class="sugg-text">Sundarbans Degradation</div>
+                <div class="suggestion-card" data-aoi="egypt_cairo" data-query="Review the before and after evidence for large-scale surface change near Cairo." data-start="2015-01-01" data-end="2024-12-31">
+                    <img class="sugg-thumb" src="/data/probe/after_rgb.png" alt="Sentinel-2 observation image for the urban development probe">
+                    <div class="sugg-text">Evidence Replay</div>
                 </div>
             </div>
         </div>
@@ -178,16 +181,17 @@
 
             <!-- Right Panel: Map -->
             <div class="discovery-map-container">
-                <div id="discovery-map"></div>
+                <div id="discovery-map" role="img" aria-label="Local evidence footprint map"></div>
                 <!-- Map Overlays -->
                 <div class="map-overlay-top" style="display:flex; justify-content:space-between; width: calc(100% - 32px);">
                     <div class="map-status"><span class="pulse-dot"></span> Demo evidence layer</div>
                     <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(255,255,255,0.94); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
-                        <button id="map-btn-draw" class="btn-icon" title="Draw Bounding Box"><i class="ph ph-bounding-box" style="font-size:20px;"></i></button>
-                        <button id="map-btn-measure" class="btn-icon" title="Measure Distance"><i class="ph ph-ruler" style="font-size:20px;"></i></button>
-                        <button id="map-btn-toggle" class="btn-icon" title="Toggle Optical/SAR"><i class="ph ph-layers" style="font-size:20px;"></i></button>
+                        <button id="map-btn-draw" class="btn-icon" title="Draw Bounding Box" aria-label="Draw bounding box"><i class="ph ph-bounding-box" style="font-size:20px;"></i></button>
+                        <button id="map-btn-measure" class="btn-icon" title="Measure Distance" aria-label="Measure distance"><i class="ph ph-ruler" style="font-size:20px;"></i></button>
+                        <button id="map-btn-toggle" class="btn-icon" title="Toggle evidence layer" aria-label="Toggle evidence layer"><i class="ph ph-layers" style="font-size:20px;"></i></button>
                     </div>
                 </div>
+
                 <div class="map-overlay-bottom">
                     <div id="map-coords" class="mono-text">Lat: 0.0000, Lng: 0.0000</div>
                 </div>
@@ -294,6 +298,11 @@
                     </div>
                 </div>
 
+                <div class="dash-card col-span-2">
+                    <h3 class="dash-title">5b. False-alarm review</h3>
+                    <div class="confounder-grid" id="confounder-grid" aria-live="polite"></div>
+                </div>
+
                 <!-- 6. Data Provenance Graph -->
                 <div class="dash-card" style="grid-column: span 3;">
                     <h3 class="dash-title">6. Data Provenance Graph</h3>
@@ -333,11 +342,11 @@
                                 <i class="ph ph-file-code fmt-icon" style="font-size:32px;"></i>
                                 <div class="fmt-desc">STAC Item + Machine Readable</div>
                             </button>
-                            <button class="format-btn" data-format="pdf">
+                            <button class="format-btn" data-format="pdf" disabled aria-disabled="true">
                                 <i class="ph ph-file-pdf fmt-icon" style="font-size:32px;"></i>
                                 <div class="fmt-desc">Executive Summary + Imagery</div>
                             </button>
-                            <button class="format-btn" data-format="geotiff">
+                            <button class="format-btn" data-format="geotiff" disabled aria-disabled="true">
                                 <i class="ph ph-file-image fmt-icon" style="font-size:32px;"></i>
                                 <div class="fmt-desc">Raw GeoTIFF + AI Masks</div>
                             </button>
@@ -395,10 +404,10 @@
 </div>
 
 <!-- Analyst Decision Modal -->
-<div id="decision-modal" class="modal-overlay" hidden>
+<div id="decision-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="decision-title" hidden>
     <div class="modal-box" style="max-width: 700px;">
         <div class="modal-header">
-            <h2>Analyst Verification Sign-off</h2>
+            <h2 id="decision-title">Analyst Verification Sign-off</h2>
             <button class="btn-close" id="btn-close-modal">×</button>
         </div>
         
@@ -438,8 +447,6 @@
 <div id="toast-container" class="toast-container"></div>
 
 <!-- Scripts -->
-<script src="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.js"></script>
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js"></script>
 <!-- Load the app as an ES module so the local prototype works consistently
      in strict in-app browser contexts as well as normal browsers. -->
 <script type="module">

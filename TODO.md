@@ -81,6 +81,10 @@
 - [x] Add background investigation jobs with polling endpoint
 - [x] Add optional API-key protection and HMAC export signatures
 - [x] Refresh Product Zero visual hierarchy, honesty cues, responsive layout, and empty states
+- [x] Wire the browser to investigation, candidate detail, decision, and export APIs with explicit offline fallback
+- [x] Render local Sentinel-2 probe imagery and false-alarm review in the workbench
+- [x] Remove remote map/font/icon runtime dependencies from the core demo journey
+- [x] Add local demo sign-in, accessible map controls, and stronger request/domain validation
 
 ### Synthetic Data
 - [ ] Write raster fixture generator script

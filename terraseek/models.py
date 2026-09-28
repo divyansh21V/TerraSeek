@@ -42,8 +42,8 @@ class TimelineSignal(str, Enum):
 
 
 class InvestigationRequest(BaseModel):
-    query: str = Field(..., min_length=5, description="Investigation query in natural language")
-    aoi_name: str = Field(..., description="Named area of interest")
+    query: str = Field(..., min_length=5, max_length=500, description="Investigation query in natural language")
+    aoi_name: str = Field(..., min_length=2, max_length=160, description="Named area of interest")
     aoi_bbox: list[float] = Field(
         ...,
         min_length=4,
@@ -63,6 +63,8 @@ class InvestigationRequest(BaseModel):
             raise ValueError("aoi_bbox must use increasing longitude values")
         if self.date_start > self.date_end:
             raise ValueError("date_start must be before date_end")
+        if (self.date_end - self.date_start).days > 3653:
+            raise ValueError("date range cannot exceed 10 years")
         return self
 
 
@@ -83,6 +85,8 @@ class STACSearchRequest(BaseModel):
             raise ValueError("bbox must be [west, south, east, north]")
         if self.date_start > self.date_end:
             raise ValueError("date_start must be before date_end")
+        if (self.date_end - self.date_start).days > 3653:
+            raise ValueError("date range cannot exceed 10 years")
         return self
 
 

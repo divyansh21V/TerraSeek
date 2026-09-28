@@ -109,13 +109,14 @@ The industry-level delivery plan, unique feature backlog, risks, and acceptance 
 
 - Demo mode uses a local NASA MODIS/Worldview fixture dataset. Investigation and decision records persist to SQLite by default.
 - MODIS resolution is approximately 250 m/pixel; it cannot confirm individual structures.
-- The browser currently contains Product Zero fixture data and is not yet fully wired to the FastAPI service.
+- The browser uses the FastAPI investigation, candidate detail, decision, and export endpoints when the API is available; it falls back to explicitly labelled local fixtures when the server is unavailable.
+- The judging UI is offline-safe: probe imagery is served from `data/probe/`, while live provider URLs remain provenance metadata and are never required to render the core journey.
 - The live STAC adapter is discovery-only; downstream COG retrieval and raster processing still need provider-specific implementation.
 - A result is evidence for analyst review, not an autonomous determination of construction, deforestation, or legal compliance.
 
 ## Roadmap to production
 
-1. Wire the browser to the API and remove duplicated fixture models.
+1. Replace the intentionally small offline fallback with a versioned local evidence-pack adapter.
 2. Add COG asset retrieval, SCL/cloud masking, and provider retry/circuit-breaker policies.
 3. Replace SQLite with PostgreSQL/PostGIS for multi-user deployments.
 4. Add durable queue workers, object storage, rate limits, structured logs, and metrics.

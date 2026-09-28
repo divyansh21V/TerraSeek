@@ -11,6 +11,7 @@ const path = require('path');
 
 const PORT = Number(process.env.PORT || 3000);
 const FRONTEND_DIR = path.join(__dirname, 'frontend');
+const DATA_DIR = path.join(__dirname, 'data');
 
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
@@ -36,10 +37,12 @@ const server = http.createServer((req, res) => {
         url = '/index.html';
     }
 
-    const filePath = path.join(FRONTEND_DIR, url);
+    const rootDir = url.startsWith('/data/') ? DATA_DIR : FRONTEND_DIR;
+    const relativeUrl = url.startsWith('/data/') ? url.slice('/data'.length) : url;
+    const filePath = path.resolve(rootDir, `.${relativeUrl}`);
 
     // Security: prevent directory traversal
-    if (!filePath.startsWith(FRONTEND_DIR)) {
+    if (!filePath.startsWith(path.resolve(rootDir) + path.sep)) {
         res.writeHead(403);
         res.end('Forbidden');
         return;

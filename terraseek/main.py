@@ -11,6 +11,7 @@ from terraseek.routes import router
 from terraseek.storage import init_storage
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 app = FastAPI(
     title="TerraSeek",
@@ -22,6 +23,11 @@ init_storage()
 
 # API routes
 app.include_router(router, prefix="/api/v1")
+
+# Local evidence assets are served read-only so the offline demo can replay
+# the same Sentinel-2 probe used by the backend and exported packages.
+if DATA_DIR.is_dir():
+    app.mount("/data", StaticFiles(directory=str(DATA_DIR)), name="data")
 
 # Serve frontend static files
 if FRONTEND_DIR.is_dir():
