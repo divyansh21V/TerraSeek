@@ -3,216 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TerraSeek — Earth Observation Evidence Engine</title>
-    <meta name="description" content="Evidence-backed satellite imagery investigation for construction and site-expansion monitoring.">
+    <title>TerraSeek | Evidence Engine</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<header id="app-header">
-    <div class="header-brand">
-        <span class="brand-icon">◈</span>
+<!-- Particle Background -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+    <div class="nav-brand" id="brand-home">
+        <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" opacity="0.8"/>
+                <circle cx="14" cy="14" r="7" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.5"/>
+                <circle cx="14" cy="14" r="3" fill="url(#grad1)"/>
+                <ellipse cx="14" cy="14" rx="12" ry="5" stroke="url(#grad1)" stroke-width="1" fill="none" opacity="0.4" transform="rotate(-25 14 14)"/>
+                <defs>
+                    <linearGradient id="grad1" x1="0" y1="0" x2="28" y2="28">
+                        <stop offset="0%" stop-color="#F97316"/>
+                        <stop offset="100%" stop-color="#F43F5E"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
         <span class="brand-name">TERRASEEK</span>
-        <span class="brand-tag">Evidence Engine</span>
+        <span class="brand-badge">PRO</span>
     </div>
-    <div class="header-status" id="header-status"></div>
-</header>
 
-<!-- ===== STATE: START ===== -->
-<main id="state-start" class="state-panel">
-    <div class="start-container">
-        <div class="start-hero">
-            <h1>Investigate site-scale construction<br>with satellite evidence.</h1>
-            <p class="start-subtitle">
-                TerraSeek identifies candidate construction or built-up expansion
-                and presents ranked evidence for analyst verification.
-                It does <strong>not</strong> autonomously confirm construction.
-            </p>
-        </div>
-
-        <form id="investigate-form" class="investigate-form" autocomplete="off">
-            <div class="form-group">
-                <label for="query-input">Investigation Query</label>
-                <input type="text" id="query-input" placeholder="e.g. Find newly built structures and site expansion activity" required>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="aoi-select">Area of Interest</label>
-                    <select id="aoi-select" required>
-                        <option value="">Select an area…</option>
-                        <option value="egypt_cairo" data-bbox="29.5,31.0,30.5,32.5">Egypt — Greater Cairo & New Administrative Capital</option>
-                        <option value="amazon_altamira" data-bbox="-4.0,-53.0,-2.5,-51.0">Amazon Basin — Altamira Region</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="date-start">Date Start</label>
-                    <input type="date" id="date-start" value="2015-01-01" required>
-                </div>
-                <div class="form-group">
-                    <label for="date-end">Date End</label>
-                    <input type="date" id="date-end" value="2024-01-01" required>
-                </div>
-            </div>
-            <button type="submit" class="btn-primary" id="btn-investigate">
-                <span class="btn-icon">⬡</span> Investigate
-            </button>
-        </form>
-
-        <div class="start-examples">
-            <p class="examples-label">Try these example investigations:</p>
-            <div class="example-cards">
-                <button class="example-card" data-query="Find newly built structures and urban expansion" data-aoi="egypt_cairo" data-start="2015-01-01" data-end="2024-01-01">
-                    <span class="example-region">Egypt — Cairo Region</span>
-                    <span class="example-text">Find newly built structures and urban expansion</span>
-                </button>
-                <button class="example-card" data-query="Identify large-scale land clearing and construction activity" data-aoi="amazon_altamira" data-start="2014-01-01" data-end="2024-01-01">
-                    <span class="example-region">Amazon — Altamira</span>
-                    <span class="example-text">Identify large-scale land clearing and construction activity</span>
-                </button>
-            </div>
-        </div>
+    <div class="nav-breadcrumbs" id="breadcrumbs">
+        <div class="crumb active" data-target="landing">Query Engine</div>
+        <div class="crumb-div">/</div>
+        <div class="crumb disabled" data-target="discovery">Discovery</div>
+        <div class="crumb-div">/</div>
+        <div class="crumb disabled" data-target="workbench">Workbench</div>
+        <div class="crumb-div">/</div>
+        <div class="crumb disabled" data-target="export">Report & Export</div>
     </div>
+
+    <div class="nav-actions">
+        <button class="btn-icon" title="Toggle AI Autopilot">
+            <i class="ph ph-robot" style="font-size: 20px;"></i>
+        </button>
+        <div class="user-avatar" title="AI Analyst Active">AI</div>
+    </div>
+</nav>
+
+<!-- Main Container -->
+<main class="app-container">
+
+    <!-- ==========================================
+         SCREEN 1: LANDING / QUERY ENGINE
+         ========================================== -->
+    <section id="screen-landing" class="screen active">
+        <div class="hero-section">
+            <h1 class="hero-title">Geospatial Intelligence, <span class="text-gradient">Automated.</span></h1>
+            <p class="hero-subtitle">Describe your intelligence requirement. TerraSeek will hunt through petabytes of satellite telemetry to extract verified evidence.</p>
+
+            <form id="investigate-form" class="query-form">
+                <div class="search-box-container">
+                    <i class="ph ph-magnifying-glass search-icon" style="font-size: 24px; padding-left: 10px;"></i>
+                    <input type="text" id="query-input" placeholder="e.g., Detect recent land reclamation along the Mumbai coastline..." autocomplete="off">
+                    <button type="submit" class="btn-primary btn-glow">Execute Search</button>
+                </div>
+
+                <!-- Live Parsed Constraints -->
+                <div class="parsed-constraints" id="parsed-constraints">
+                    <!-- JS will populate chips here -->
+                </div>
+
+                <!-- Advanced Parameters Panel -->
+                <div class="advanced-params">
+                    <div class="param-group">
+                        <label>Target AOI</label>
+                        <select id="aoi-select">
+                            <option value="">Select Region...</option>
+                            <option value="mumbai_coastal">India: Mumbai Coastal Road</option>
+                            <option value="himalayan_dam">India: Dibang Valley Dam</option>
+                            <option value="sundarbans">India: Sundarbans Degradation</option>
+                            <option value="punjab_agri">India: Punjab Crop Burning</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label>Time Window</label>
+                        <div class="date-range">
+                            <input type="date" id="date-start" value="2022-01-01">
+                            <span>to</span>
+                            <input type="date" id="date-end" value="2024-06-01">
+                        </div>
+                    </div>
+                    <div class="param-group">
+                        <label>Max Cloud Cover: <span id="cloud-val">15%</span></label>
+                        <input type="range" id="cloud-threshold" min="0" max="100" value="15">
+                    </div>
+                    <div class="param-group">
+                        <label>Resolution</label>
+                        <select id="res-select">
+                            <option value="all">Any</option>
+                            <option value="high">High (≤ 3m)</option>
+                            <option value="med" selected>Medium (10m - 30m)</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label>Constellation</label>
+                        <select id="sensor-select">
+                            <option value="all">Multi-Sensor Fusion</option>
+                            <option value="optical">Optical (Sentinel-2, Landsat)</option>
+                            <option value="sar">SAR (Sentinel-1)</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Suggestion Cards -->
+            <div class="suggestions-grid">
+                <div class="suggestion-card" data-aoi="mumbai_coastal" data-query="Identify new coastal land reclamation and marine infrastructure development along the western seaboard of Mumbai." data-start="2021-02-15" data-end="2024-03-10">
+                    <div class="sugg-icon"><i class="ph ph-waves" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <div class="sugg-text">Mumbai Coastal Reclamation</div>
+                </div>
+                <div class="suggestion-card" data-aoi="himalayan_dam" data-query="Detect early-stage earthmoving, access roads, and river diversion for hydroelectric dam construction in Arunachal Pradesh." data-start="2022-10-05" data-end="2024-04-22">
+                    <div class="sugg-icon"><i class="ph ph-lightning" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <div class="sugg-text">Himalayan Dam Construction</div>
+                </div>
+                <div class="suggestion-card" data-aoi="punjab_agri" data-query="Map thermal anomalies and agricultural stubble burning patterns post-harvest in Punjab." data-start="2023-10-15" data-end="2023-11-10">
+                    <div class="sugg-icon"><i class="ph ph-fire" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <div class="sugg-text">Punjab Crop Fires</div>
+                </div>
+                <div class="suggestion-card" data-aoi="sundarbans" data-query="Assess mangrove canopy degradation and illegal aquaculture expansion in the Sundarbans reserve." data-start="2021-11-10" data-end="2024-02-18">
+                    <div class="sugg-icon"><i class="ph ph-tree" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <div class="sugg-text">Sundarbans Degradation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 2: DISCOVERY
+         ========================================== -->
+    <section id="screen-discovery" class="screen">
+        <div class="discovery-layout">
+            <!-- Left Panel: Results -->
+            <div class="discovery-sidebar">
+                <div class="sidebar-header">
+                    <h2>Intelligence Candidates</h2>
+                    <span class="badge" id="result-count">0 found</span>
+                </div>
+                
+                <div class="filter-bar">
+                    <button class="filter-chip active">All</button>
+                    <button class="filter-chip">High Priority</button>
+                    <button class="filter-chip">Optical</button>
+                    <button class="filter-chip">SAR</button>
+                </div>
+
+                <div class="candidate-list" id="candidate-list">
+                    <!-- JS renders cards here -->
+                </div>
+            </div>
+
+            <!-- Right Panel: Map -->
+            <div class="discovery-map-container">
+                <div id="discovery-map"></div>
+                <!-- Map Overlays -->
+                <div class="map-overlay-top" style="display:flex; justify-content:space-between; width: calc(100% - 32px);">
+                    <div class="map-status"><span class="pulse-dot"></span> Live Telemetry</div>
+                    <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
+                        <button id="map-btn-draw" class="btn-icon" title="Draw Bounding Box"><i class="ph ph-bounding-box" style="font-size:20px;"></i></button>
+                        <button id="map-btn-measure" class="btn-icon" title="Measure Distance"><i class="ph ph-ruler" style="font-size:20px;"></i></button>
+                        <button id="map-btn-toggle" class="btn-icon" title="Toggle Optical/SAR"><i class="ph ph-layers" style="font-size:20px;"></i></button>
+                    </div>
+                </div>
+                <div class="map-overlay-bottom">
+                    <div id="map-coords" class="mono-text">Lat: 0.0000, Lng: 0.0000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 3: WORKBENCH
+         ========================================== -->
+    <section id="screen-workbench" class="screen">
+        <div class="workbench-layout">
+            
+            <!-- TOP: Viewport -->
+            <div class="wb-viewport-section">
+                <div class="wb-toolbar">
+                    <div class="wb-title">
+                        <h2 id="wb-location-title">Candidate Analysis</h2>
+                        <span class="wb-badge" id="wb-priority-badge">HIGH</span>
+                    </div>
+                    <div class="wb-controls">
+                        <button class="mode-btn active" data-mode="swipe">
+                            <i class="ph ph-arrows-out-line-horizontal" style="margin-right:4px;"></i> Swipe
+                        </button>
+                        <button class="mode-btn" data-mode="side">
+                            <i class="ph ph-columns" style="margin-right:4px;"></i> Split
+                        </button>
+                        <button class="mode-btn" data-mode="overlay">
+                            <i class="ph ph-intersect" style="margin-right:4px;"></i> AI Mask
+                        </button>
+                    </div>
+                </div>
+
+                <div class="viewport-container" id="viewport-container">
+                    <div class="viewport-image before-image" id="swipe-before">
+                        <div class="viewport-label" id="wb-before-label">T1 Baseline</div>
+                    </div>
+                    <div class="viewport-image after-image" id="swipe-after">
+                        <div class="viewport-label" id="wb-after-label">T2 Observation</div>
+                    </div>
+                    <div class="swipe-divider" id="swipe-divider">
+                        <div class="swipe-handle">
+                            <i class="ph-bold ph-caret-left" style="color:white; font-size:16px;"></i>
+                            <i class="ph-bold ph-caret-right" style="color:white; font-size:16px;"></i>
+                        </div>
+                    </div>
+                    <input type="range" class="swipe-slider-hidden" id="swipe-slider" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <!-- BOTTOM: 6-Section Dashboard -->
+            <div class="wb-dashboard">
+                
+                <!-- 1. Evidence Decomposition -->
+                <div class="dash-card">
+                    <h3 class="dash-title">1. Evidence Decomposition</h3>
+                    <div class="decomp-grid" id="decomposition-grid">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <!-- 2. Temporal Series -->
+                <div class="dash-card col-span-2">
+                    <h3 class="dash-title">2. Temporal Series</h3>
+                    <div class="timeline-container" id="temporal-timeline">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <!-- 3. Change Analysis -->
+                <div class="dash-card">
+                    <h3 class="dash-title">3. Change Metrics</h3>
+                    <div class="metrics-grid" id="change-analysis">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <!-- 4. Spectral & SAR Signatures -->
+                <div class="dash-card">
+                    <h3 class="dash-title">4. Spectral & SAR Signatures</h3>
+                    <div class="spectral-chart">
+                        <svg viewBox="0 0 200 100" class="line-chart">
+                            <polyline points="0,80 40,75 80,60 120,20 160,15 200,10" fill="none" stroke="var(--accent-orange)" stroke-width="3"/>
+                            <polyline points="0,85 40,85 80,80 120,82 160,85 200,88" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="4,4"/>
+                        </svg>
+                        <div class="chart-legend">
+                            <span style="color:var(--accent-orange)">T2 (Current)</span>
+                            <span style="color:var(--text-muted)">T1 (Baseline)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Verification & Confidence -->
+                <div class="dash-card">
+                    <h3 class="dash-title">5. Verification & Confidence</h3>
+                    <div class="confidence-gauge">
+                        <div class="gauge-ring" id="ai-confidence-ring">
+                            <span class="gauge-value">94%</span>
+                        </div>
+                        <div class="gauge-details">
+                            <div class="gauge-stat">False Positive Risk: <span>Low (2.4%)</span></div>
+                            <div class="gauge-stat">Spatial Certainty: <span>High (±10m)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Data Provenance Graph -->
+                <div class="dash-card" style="grid-column: span 3;">
+                    <h3 class="dash-title">6. Data Provenance Graph</h3>
+                    <div class="provenance-section" style="padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <div class="dag-container" id="provenance-dag" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                            <!-- JS Populated via app.js -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Analyst Action Bar -->
+            <div class="action-bar-bottom">
+                <button class="btn-secondary" id="btn-open-decision">Log Analyst Decision...</button>
+                <button class="btn-primary" id="btn-proceed-export">Finalize & Export Report ➔</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 4: EXPORT & REPORTING
+         ========================================== -->
+    <section id="screen-export" class="screen">
+        <div class="export-layout">
+            <div class="export-header">
+                <h2>Generate Intelligence Report</h2>
+                <p>Package the verified evidence into a standardized format for downstream consumption.</p>
+            </div>
+
+            <div class="export-content">
+                <div class="export-options">
+                    <div class="export-card">
+                        <h3>Report Format</h3>
+                        <div class="format-selector">
+                            <button class="format-btn active" data-format="json">
+                                <i class="ph ph-file-code fmt-icon" style="font-size:32px;"></i>
+                                <div class="fmt-desc">STAC Item + Machine Readable</div>
+                            </button>
+                            <button class="format-btn" data-format="pdf">
+                                <i class="ph ph-file-pdf fmt-icon" style="font-size:32px;"></i>
+                                <div class="fmt-desc">Executive Summary + Imagery</div>
+                            </button>
+                            <button class="format-btn" data-format="geotiff">
+                                <i class="ph ph-file-image fmt-icon" style="font-size:32px;"></i>
+                                <div class="fmt-desc">Raw GeoTIFF + AI Masks</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="export-card">
+                        <h3>Include Attachments</h3>
+                        <div class="checkbox-group">
+                            <label class="cb-container">
+                                <input type="checkbox" checked> <span class="cb-mark"></span> High-Res Imagery (Before/After)
+                            </label>
+                            <label class="cb-container">
+                                <input type="checkbox" checked> <span class="cb-mark"></span> Analyst Notes & Provenance DAG
+                            </label>
+                            <label class="cb-container">
+                                <input type="checkbox" checked> <span class="cb-mark"></span> AI Confidence Heatmaps
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="export-summary-panel">
+                    <div id="export-summary">
+                        <!-- JS populated -->
+                    </div>
+                    <button class="btn-primary btn-glow btn-block mt-4" id="btn-export-download">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                        Download Package
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
 
-<!-- ===== STATE: LOADING ===== -->
-<main id="state-loading" class="state-panel" hidden>
-    <div class="loading-container">
+<!-- ==========================================
+     MODALS & OVERLAYS
+     ========================================== -->
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="loading-overlay" hidden>
+    <div class="loading-box">
         <div class="loading-spinner"></div>
-        <p class="loading-text">Analysing satellite observations…</p>
-        <p class="loading-sub">Filtering candidates, computing evidence signals.</p>
+        <h3 class="loading-text">Executing Geospatial Query</h3>
+        <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+        <div class="loading-steps">
+            <div class="step-item" data-step="nlp">Parsing NLP Constraints</div>
+            <div class="step-item" data-step="stac">Querying Satellite Catalog</div>
+            <div class="step-item" data-step="compute">Running AI Models</div>
+            <div class="step-item" data-step="rank">Ranking Evidence</div>
+        </div>
     </div>
-</main>
+</div>
 
-<!-- ===== STATE: RESULTS ===== -->
-<main id="state-results" class="state-panel" hidden>
-    <div class="results-header">
-        <button class="btn-back" id="btn-back-start">← New Investigation</button>
-        <div class="results-meta" id="results-meta"></div>
-    </div>
-    <div class="results-grid" id="results-grid"></div>
-    <div id="no-results" class="no-results" hidden>
-        <p class="no-results-title">No candidates found.</p>
-        <p class="no-results-detail">No observations in the prototype dataset match your query, area, and date range. Try broadening the date range or selecting a different AOI.</p>
-    </div>
-</main>
-
-<!-- ===== STATE: CANDIDATE DETAIL ===== -->
-<main id="state-detail" class="state-panel" hidden>
-    <div class="detail-header">
-        <button class="btn-back" id="btn-back-results">← Back to Results</button>
-        <h2 id="detail-title"></h2>
-        <div class="detail-priority" id="detail-priority"></div>
-    </div>
-
-    <div class="detail-body">
-        <!-- Before / After Comparison -->
-        <section class="detail-section">
-            <h3>Before / After Comparison</h3>
-            <div class="compare-container">
-                <div class="compare-labels">
-                    <span class="compare-label compare-label-before" id="label-before"></span>
-                    <span class="compare-label compare-label-after" id="label-after"></span>
-                </div>
-                <div class="compare-viewport" id="compare-viewport">
-                    <img class="compare-img compare-img-before" id="img-before" alt="Before observation">
-                    <div class="compare-clip" id="compare-clip">
-                        <img class="compare-img compare-img-after" id="img-after" alt="After observation">
-                    </div>
-                    <div class="compare-divider" id="compare-divider"></div>
-                    <div class="compare-fallback" id="compare-fallback" hidden>
-                        <p>⚠ Satellite imagery not available.</p>
-                        <p>NASA Worldview API may be temporarily unreachable.<br>Evidence signals and data below remain valid.</p>
-                    </div>
-                </div>
-                <input type="range" min="0" max="100" value="50" class="compare-slider" id="compare-slider">
-                <div class="compare-sources" id="compare-sources"></div>
+<!-- Analyst Decision Modal -->
+<div id="decision-modal" class="modal-overlay" hidden>
+    <div class="modal-box" style="max-width: 700px;">
+        <div class="modal-header">
+            <h2>Analyst Verification Sign-off</h2>
+            <button class="btn-close" id="btn-close-modal">×</button>
+        </div>
+        
+        <div class="modal-body" style="display:flex; flex-direction:column; gap:24px;">
+            <div class="decision-buttons" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px;">
+                <button class="btn-decision verify" data-dec="VERIFIED" style="padding:16px; border:2px solid transparent; border-radius:12px; background:rgba(34,197,94,0.1); cursor:pointer; transition:0.3s; text-align:center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" style="margin-bottom:8px;"><path d="M20 6L9 17l-5-5"/></svg>
+                    <div class="dec-title" style="color:#22c55e; font-weight:700; margin-bottom:4px;">VERIFIED</div>
+                    <div class="dec-sub" style="font-size:0.75rem; color:var(--text-muted);">High Confidence Finding</div>
+                </button>
+                <button class="btn-decision reject" data-dec="REJECTED" style="padding:16px; border:2px solid transparent; border-radius:12px; background:rgba(239,68,68,0.1); cursor:pointer; transition:0.3s; text-align:center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" style="margin-bottom:8px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    <div class="dec-title" style="color:#ef4444; font-weight:700; margin-bottom:4px;">REJECTED</div>
+                    <div class="dec-sub" style="font-size:0.75rem; color:var(--text-muted);">False Positive / Artifact</div>
+                </button>
+                <button class="btn-decision uncertain" data-dec="INCONCLUSIVE" style="padding:16px; border:2px solid transparent; border-radius:12px; background:rgba(234,179,8,0.1); cursor:pointer; transition:0.3s; text-align:center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" style="margin-bottom:8px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    <div class="dec-title" style="color:#eab308; font-weight:700; margin-bottom:4px;">INCONCLUSIVE</div>
+                    <div class="dec-sub" style="font-size:0.75rem; color:var(--text-muted);">Requires Field Tasking</div>
+                </button>
             </div>
-        </section>
-
-        <!-- Ranking Signals -->
-        <section class="detail-section">
-            <h3>Investigation Priority Signals</h3>
-            <div class="signals-grid" id="signals-grid"></div>
-        </section>
-
-        <!-- Evidence: Observed -->
-        <section class="detail-section">
-            <h3><span class="evidence-badge evidence-observed">OBSERVED</span> Direct observations from the dataset</h3>
-            <div class="evidence-list" id="evidence-observed"></div>
-        </section>
-
-        <!-- Evidence: Inferred -->
-        <section class="detail-section">
-            <h3><span class="evidence-badge evidence-inferred">INFERRED</span> Derived signals and interpretation</h3>
-            <div class="evidence-list" id="evidence-inferred"></div>
-        </section>
-
-        <!-- Limitations -->
-        <section class="detail-section">
-            <h3><span class="evidence-badge evidence-limitation">LIMITATION</span> What the system cannot establish</h3>
-            <ul class="limitations-list" id="evidence-limitations"></ul>
-        </section>
-
-        <!-- Timeline -->
-        <section class="detail-section">
-            <h3>Temporal Observations</h3>
-            <div class="timeline" id="timeline"></div>
-        </section>
-
-        <!-- Quality Checks -->
-        <section class="detail-section">
-            <h3>Data Quality Checks</h3>
-            <div class="quality-grid" id="quality-grid"></div>
-        </section>
-
-        <!-- Contextual Evidence -->
-        <section class="detail-section">
-            <h3>Contextual Evidence</h3>
-            <div class="evidence-list" id="evidence-contextual"></div>
-        </section>
-
-        <!-- Warnings -->
-        <section class="detail-section" id="warnings-section" hidden>
-            <h3>⚠ Warnings & Limitations</h3>
-            <ul class="warnings-list" id="warnings-list"></ul>
-        </section>
-
-        <!-- Analyst Decision -->
-        <section class="detail-section decision-section">
-            <h3>Analyst Decision</h3>
-            <p class="decision-prompt">Based on the evidence above, what is your assessment of this candidate?</p>
-            <div class="decision-buttons" id="decision-buttons">
-                <button class="btn-decision btn-confirmed" data-decision="CONFIRMED">✓ Confirmed</button>
-                <button class="btn-decision btn-rejected" data-decision="REJECTED">✕ Rejected</button>
-                <button class="btn-decision btn-deferred" data-decision="DEFERRED">◷ Deferred</button>
-                <button class="btn-decision btn-needs-imagery" data-decision="NEEDS_MORE_IMAGERY">⊕ Needs More Imagery</button>
+            
+            <div style="background:var(--bg-input); padding:16px; border-radius:8px; border:1px solid var(--border-subtle);">
+                <label style="display:block; margin-bottom:8px; font-weight:600; font-size:0.85rem; color:var(--text-secondary);">ANALYST REMARKS & JUSTIFICATION</label>
+                <textarea id="analyst-notes" class="notes-input" style="width:100%; height:100px; background:transparent; border:none; color:white; outline:none; font-family:var(--font-sans); font-size:0.9rem; resize:vertical;" placeholder="Enter specific observations, confidence justifications, or secondary findings to be appended to the intelligence report..."></textarea>
             </div>
-            <div class="decision-notes-wrapper">
-                <label for="decision-notes">Notes (optional)</label>
-                <textarea id="decision-notes" rows="2" placeholder="Add notes about this decision…"></textarea>
+            
+            <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:16px; margin-top:8px;">
+                <button class="btn-secondary" id="btn-cancel-decision" style="padding:10px 24px; border-radius:8px;">Cancel</button>
+                <button class="btn-primary" id="btn-save-decision" style="padding:10px 24px; border-radius:8px; background:linear-gradient(135deg, var(--accent-orange), var(--accent-rose)); color:white; border:none; font-weight:600; cursor:pointer;">Commit to Intel Ledger</button>
             </div>
-            <div class="decision-status" id="decision-status" hidden></div>
-        </section>
-
-        <!-- Export -->
-        <section class="detail-section">
-            <button class="btn-export" id="btn-export">⤓ Export Evidence Package (JSON)</button>
-        </section>
+        </div>
     </div>
-</main>
+</div>
 
-<!-- ===== STATE: ERROR ===== -->
-<main id="state-error" class="state-panel" hidden>
-    <div class="error-container">
-        <p class="error-title">Something went wrong</p>
-        <p class="error-detail" id="error-detail"></p>
-        <button class="btn-primary" id="btn-retry">Try Again</button>
-    </div>
-</main>
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
 
+<!-- Scripts -->
+<script src="https://unpkg.com/maplibre-gl@4.0.0/dist/maplibre-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>
