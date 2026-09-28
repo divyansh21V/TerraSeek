@@ -1,0 +1,10 @@
+.git
+.github
+.pytest_cache
+.ruff_cache
+.venv
+artifacts
+data/probe/spectral
+data/probe/change_detection/detector_report.json
+*.pyc
+__pycache__

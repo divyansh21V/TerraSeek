@@ -40,6 +40,22 @@ Every result exposes six inspectable channels instead of relying on an uncalibra
 - Optional API-key protection and HMAC-signed evidence packages
 - Docker entry point and GitHub Actions for Python and JavaScript checks
 
+## Why judges remember TerraSeek
+
+TerraSeek is not only a “find change” demo. It turns a satellite question into a reviewable decision:
+
+| Differentiator | What is already real in the prototype |
+|---|---|
+| Evidence Ledger | Source, quality, timeline, evidence channels, analyst decision, and export are shown as one traceable path. |
+| Change Fingerprint | Spectral, semantic, spatial, quality, persistence, and confounder signals are surfaced separately. |
+| False-alarm review | Cloud, seasonality, registration, terrain, smoke, and other quality/confounder checks are visible before sign-off. |
+| Human-in-the-loop action | An analyst can confirm, reject, or defer a candidate with a justification. |
+| Evidence replay | Before/after imagery, a deterministic change mask, timeline, provenance graph, and JSON package support reproducibility. |
+| Offline-first resilience | The core judging flow runs from local probe imagery and an explicit fixture fallback when the API or network is unavailable. |
+| India/public-sector fit | The journey is designed for field verification, environmental monitoring, encroachment review, disaster response, and district-level workflows. |
+
+The strongest 180-second story is: **ask → ground → prove → decide → act**. Do not pitch an opaque AI score; show how TerraSeek exposes enough evidence for a human to defend the decision.
+
 ## Quick start
 
 ### Python API and UI
@@ -70,6 +86,19 @@ Open `http://localhost:3000`.
 docker build -t terraseek .
 docker run --rm -p 8000:8000 terraseek
 ```
+
+The image includes the local probe assets used by the offline judging flow. For a persistent deployment, set `TERRASEEK_DB_PATH` to a mounted writable volume, plus long random values for `TERRASEEK_API_KEY` and `TERRASEEK_SIGNING_KEY`.
+
+### Deploy on Render
+
+The repository includes [`render.yaml`](render.yaml) for a Docker web service with a persistent SQLite disk and `/api/v1/health` health checks:
+
+1. Push this repository to GitHub.
+2. In Render, choose **New → Blueprint** and select the repository.
+3. Set the two secret values requested by the blueprint: `TERRASEEK_API_KEY` and `TERRASEEK_SIGNING_KEY`.
+4. Deploy and verify `/api/v1/health`, `/docs`, and the root UI URL.
+
+This is a hackathon deployment profile. For production multi-user workloads, replace SQLite with PostgreSQL/PostGIS and the in-process job runner with a durable worker queue.
 
 ### Tests and checks
 
@@ -108,6 +137,8 @@ The industry-level delivery plan, unique feature backlog, risks, and acceptance 
 ## UI QA screenshots
 
 The latest browser smoke pass covers login, query setup, discovery, and the workbench at desktop, tablet, and mobile widths. Accepted screenshots are stored in [`artifacts/ui-qa/`](artifacts/ui-qa/).
+
+The most presentation-ready frame is [`desktop-workbench-ppt.png`](artifacts/ui-qa/desktop-workbench-ppt.png).
 
 ## Current limitations
 

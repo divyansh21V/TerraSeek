@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: terraseek
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: TERRASEEK_MODE
+        value: demo
+      - key: TERRASEEK_DB_PATH
+        value: /var/lib/terraseek/terraseek.db
+      - key: TERRASEEK_API_KEY
+        sync: false
+      - key: TERRASEEK_SIGNING_KEY
+        sync: false
+    disk:
+      name: terraseek-data
+      mountPath: /var/lib/terraseek
+      sizeGB: 1

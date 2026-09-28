@@ -7,8 +7,11 @@ WORKDIR /app
 COPY pyproject.toml ./
 COPY terraseek ./terraseek
 COPY frontend ./frontend
+COPY data/probe ./data/probe
 COPY docs ./docs
 COPY README.md LICENSE ./
+
+RUN mkdir -p /var/lib/terraseek
 
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir .
