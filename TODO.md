@@ -71,6 +71,11 @@
 - [ ] Create docker-compose.yml (dev stack)
 - [ ] Set up GitHub Actions CI pipeline
 - [ ] Create CONTRIBUTING.md
+- [x] Complete first UX/code audit and record industry-level prototype plan in `INDUSTRY_LEVEL_PLAN.md`
+- [x] Fix local server JavaScript MIME compatibility and make the browser bundle load as a module
+- [x] Align analyst decision labels with the API contract
+- [x] Prevent unsupported PDF/GeoTIFF selections from producing mislabeled JSON files
+- [x] Validate investigation ownership before recording a decision
 
 ### Synthetic Data
 - [ ] Write raster fixture generator script

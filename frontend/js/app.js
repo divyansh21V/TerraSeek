@@ -142,7 +142,9 @@ const appState = {
     selectedAOI: null,
     query: '',
     candidates: [],
-    selectedCandidate: null
+    selectedCandidate: null,
+    decision: null,
+    notes: ''
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -588,6 +590,8 @@ function initModals() {
         if (!active) { showToast('Select a verdict first', 'error'); return; }
         
         const dec = active.dataset.dec;
+        appState.decision = dec;
+        appState.notes = $('#analyst-notes')?.value?.trim() || '';
         $('#manifest-verdict').textContent = dec;
         $('#manifest-verdict').style.color = 'var(--accent-emerald)';
         
@@ -617,11 +621,17 @@ function initModals() {
         const format = formatBtn ? formatBtn.dataset.format : 'json';
 
         setTimeout(() => {
+            if (format !== 'json') {
+                showToast(`${format.toUpperCase()} export is not implemented yet; choose JSON Evidence Package.`, 'error');
+                return;
+            }
             const dataToExport = appState.selectedCandidate || { message: "No candidate selected" };
+            dataToExport.analyst_decision = appState.decision;
+            dataToExport.analyst_notes = appState.notes;
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToExport, null, 2));
             const downloadAnchorNode = document.createElement('a');
             downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", `terraseek_export_${Date.now()}.${format === 'json' ? 'json' : 'pdf'}`);
+            downloadAnchorNode.setAttribute("download", `terraseek_evidence_package_${Date.now()}.json`);
             document.body.appendChild(downloadAnchorNode); 
             downloadAnchorNode.click();
             downloadAnchorNode.remove();
@@ -666,7 +676,7 @@ function initParticles() {
     init(); draw();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootTerraSeek() {
     initParticles();
     initLanding();
     initSwipe();
@@ -678,4 +688,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     $('#brand-home').addEventListener('click', () => showScreen('landing'));
-});
+}
+
+// The app is loaded dynamically in the desktop prototype. If the import
+// resolves after DOMContentLoaded, waiting for that event would leave every
+// control inert. Support both normal script loading and dynamic module load.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootTerraSeek, { once: true });
+} else {
+    bootTerraSeek();
+}

@@ -32,6 +32,8 @@ def health():
         "status": "healthy",
         "version": "0.1.0",
         "data_source": "local_prototype",
+        "mode": "demo_fixture",
+        "capabilities": ["investigate", "evidence_channels", "analyst_decisions", "json_export"],
     }
 
 
@@ -74,7 +76,10 @@ def submit_decision(request: DecisionRequest):
             status_code=404,
             detail=f"Candidate '{request.candidate_id}' not found",
         )
-    return record_decision(request)
+    try:
+        return record_decision(request)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @router.get("/export/{investigation_id}")

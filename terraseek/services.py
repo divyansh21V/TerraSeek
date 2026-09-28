@@ -6,7 +6,7 @@ Separated from HTTP routes so the logic is testable independently.
 from __future__ import annotations
 
 import uuid
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 
 from terraseek.demo_data import (
     DEMO_AOIS,
@@ -20,6 +20,7 @@ from terraseek.models import (
     CandidateSummary,
     DecisionRequest,
     DecisionResponse,
+    EvidenceChannel,
     EvidenceItem,
     ExportPackage,
     InvestigationRequest,
@@ -79,6 +80,33 @@ def _build_candidate_detail(
     dec_key = f"{investigation_id}:{raw['id']}"
     decision_data = _decisions.get(dec_key, {})
 
+    evidence_channels = {
+        "spectral_signal": _channel(
+            signals["visual_change_strength"],
+            "Spectral and visual change strength in the selected comparison.",
+        ),
+        "semantic_match": _channel(
+            query_relevance,
+            "Relevance of the query terms to the candidate evidence keywords.",
+        ),
+        "temporal_persistence": _channel(
+            signals["temporal_persistence"],
+            "Persistence of the observed signal across the available timeline.",
+        ),
+        "spatial_context": _channel(
+            signals["contextual_relevance"],
+            "Relationship between the candidate and the requested area/context.",
+        ),
+        "quality_assurance": _channel(
+            signals["data_suitability"],
+            "Suitability of the imagery for this investigation and resolution.",
+        ),
+        "confounder_risk": _channel(
+            1.0 - signals["confounder_risk"],
+            "Lower raw confounder risk produces a stronger evidence score.",
+        ),
+    }
+
     return CandidateDetail(
         id=raw["id"],
         investigation_id=investigation_id,
@@ -88,6 +116,7 @@ def _build_candidate_detail(
         investigation_priority=priority,
         ranking_score=ranking_score,
         priority_signals=PrioritySignals(**signals),
+        evidence_channels=evidence_channels,
         before_image_url=_worldview_url(raw["before_bbox"], raw["before_date"]),
         before_date=raw["before_date"],
         before_source=raw["before_source"],
@@ -104,6 +133,17 @@ def _build_candidate_detail(
         analyst_decision=decision_data.get("decision"),
         analyst_notes=decision_data.get("notes"),
     )
+
+
+def _channel(score: float, rationale: str) -> EvidenceChannel:
+    """Convert a normalized signal into an honest qualitative status."""
+    if score >= 0.75:
+        status = "STRONG"
+    elif score >= 0.5:
+        status = "MODERATE"
+    else:
+        status = "WEAK"
+    return EvidenceChannel(score=round(score, 4), status=status, rationale=rationale)
 
 
 # --- Public service functions ---
@@ -219,8 +259,15 @@ def get_candidate_detail(
 
 def record_decision(req: DecisionRequest) -> DecisionResponse:
     """Record an analyst decision for a candidate."""
+    investigation = _investigations.get(req.investigation_id)
+    if investigation is None:
+        raise ValueError(f"Investigation '{req.investigation_id}' not found")
+    if req.candidate_id not in investigation["candidate_ids"]:
+        raise ValueError(
+            f"Candidate '{req.candidate_id}' is not part of investigation '{req.investigation_id}'"
+        )
     key = f"{req.investigation_id}:{req.candidate_id}"
-    now = datetime.utcnow().isoformat() + "Z"
+    now = datetime.now(UTC).isoformat().replace("+00:00", "Z")
 
     _decisions[key] = {
         "decision": req.decision.value,
@@ -257,7 +304,7 @@ def export_investigation(investigation_id: str) -> ExportPackage | None:
             inv_decisions[cid] = val
 
     return ExportPackage(
-        exported_at=datetime.utcnow().isoformat() + "Z",
+        exported_at=datetime.now(UTC).isoformat().replace("+00:00", "Z"),
         investigation_id=investigation_id,
         query=inv["query"],
         aoi_name=inv["aoi_name"],
@@ -266,9 +313,15 @@ def export_investigation(investigation_id: str) -> ExportPackage | None:
         candidates=candidates,
         decisions=inv_decisions,
         system_info={
-            "version": "0.1.0",
+            "version": "0.2.0",
             "data_source": "Local prototype dataset (NASA MODIS via Worldview)",
+            "mode": "demo_fixture",
+            "reproducible": True,
             "ranking_method": "Deterministic weighted signal scoring",
             "resolution_note": "MODIS 250 m/pixel — site-scale detection only",
+            "limitations": [
+                "This package is a deterministic prototype fixture, not live provider data.",
+                "MODIS resolution is insufficient for structure-level confirmation.",
+            ],
         },
     )

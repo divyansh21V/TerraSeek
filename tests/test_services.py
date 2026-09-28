@@ -67,3 +67,42 @@ def test_run_investigation_and_candidate_flow():
     assert export_pkg.investigation_id == resp.investigation_id
     assert first_candidate.id in export_pkg.decisions
     assert export_pkg.decisions[first_candidate.id]["decision"] == "CONFIRMED"
+    assert set(detail.evidence_channels) == {
+        "spectral_signal",
+        "semantic_match",
+        "temporal_persistence",
+        "spatial_context",
+        "quality_assurance",
+        "confounder_risk",
+    }
+
+
+def test_decision_cannot_cross_investigations():
+    req = InvestigationRequest(
+        query="Find construction expansion near the city",
+        aoi_name="Egypt — Greater Cairo & New Administrative Capital",
+        aoi_bbox=[29.5, 31.0, 30.5, 32.5],
+        date_start=date(2015, 1, 1),
+        date_end=date(2024, 1, 1),
+    )
+    first = run_investigation(req)
+    second = run_investigation(
+        InvestigationRequest(
+            query="Find deforestation near the river",
+            aoi_name="Amazon Basin — Altamira Region",
+            aoi_bbox=[-4.0, -53.0, -2.5, -51.0],
+            date_start=date(2015, 1, 1),
+            date_end=date(2024, 1, 1),
+        )
+    )
+
+    from pytest import raises
+
+    with raises(ValueError, match="not part of investigation"):
+        record_decision(
+            DecisionRequest(
+                investigation_id=second.investigation_id,
+                candidate_id=first.candidates[0].id,
+                decision=AnalystDecision.REJECTED,
+            )
+        )

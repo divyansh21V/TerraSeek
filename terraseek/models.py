@@ -82,6 +82,14 @@ class PrioritySignals(BaseModel):
     confounder_risk: float = Field(ge=0.0, le=1.0, description="0=low risk, 1=high risk")
 
 
+class EvidenceChannel(BaseModel):
+    """One inspectable evidence dimension behind a candidate result."""
+
+    score: float = Field(ge=0.0, le=1.0)
+    status: str
+    rationale: str
+
+
 class CandidateSummary(BaseModel):
     id: str
     location_name: str
@@ -105,6 +113,7 @@ class CandidateDetail(BaseModel):
     investigation_priority: str
     ranking_score: float
     priority_signals: PrioritySignals
+    evidence_channels: dict[str, EvidenceChannel]
 
     before_image_url: str
     before_date: str
@@ -151,7 +160,7 @@ class DecisionResponse(BaseModel):
 
 
 class ExportPackage(BaseModel):
-    export_version: str = "0.1.0"
+    export_version: str = "0.2.0"
     exported_at: str
     investigation_id: str
     query: str
