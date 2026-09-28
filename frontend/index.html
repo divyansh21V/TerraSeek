@@ -52,10 +52,7 @@
     </div>
 
     <div class="nav-actions">
-        <button class="btn-icon" title="Toggle AI Autopilot">
-            <i class="ph ph-robot" style="font-size: 20px;"></i>
-        </button>
-        <div class="user-avatar" title="AI Analyst Active">AI</div>
+        <span class="mode-pill"><span class="mode-dot"></span> Demo workspace</span>
     </div>
 </nav>
 
@@ -88,6 +85,8 @@
                 </div>
 
                 <!-- Advanced Parameters Panel -->
+                <details class="advanced-settings">
+                    <summary>Refine search <span>AOI, dates, quality and sensor</span></summary>
                 <div class="advanced-params">
                     <div class="param-group">
                         <label>Target AOI</label>
@@ -128,24 +127,25 @@
                         </select>
                     </div>
                 </div>
+                </details>
             </form>
 
             <!-- Suggestion Cards -->
             <div class="suggestions-grid">
                 <div class="suggestion-card" data-aoi="mumbai_coastal" data-query="Identify new coastal land reclamation and marine infrastructure development along the western seaboard of Mumbai." data-start="2021-02-15" data-end="2024-03-10">
-                    <div class="sugg-icon"><i class="ph ph-waves" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <img class="sugg-thumb" src="/assets/before.png" alt="Satellite change overview for Mumbai coastline">
                     <div class="sugg-text">Mumbai Coastal Reclamation</div>
                 </div>
                 <div class="suggestion-card" data-aoi="himalayan_dam" data-query="Detect early-stage earthmoving, access roads, and river diversion for hydroelectric dam construction in Arunachal Pradesh." data-start="2022-10-05" data-end="2024-04-22">
-                    <div class="sugg-icon"><i class="ph ph-lightning" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <img class="sugg-thumb" src="/assets/change_map.png" alt="Detected change regions in a satellite scene">
                     <div class="sugg-text">Himalayan Dam Construction</div>
                 </div>
                 <div class="suggestion-card" data-aoi="punjab_agri" data-query="Map thermal anomalies and agricultural stubble burning patterns post-harvest in Punjab." data-start="2023-10-15" data-end="2023-11-10">
-                    <div class="sugg-icon"><i class="ph ph-fire" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <img class="sugg-thumb" src="/assets/ndvi_delta.png" alt="Vegetation index difference map">
                     <div class="sugg-text">Punjab Crop Fires</div>
                 </div>
                 <div class="suggestion-card" data-aoi="sundarbans" data-query="Assess mangrove canopy degradation and illegal aquaculture expansion in the Sundarbans reserve." data-start="2021-11-10" data-end="2024-02-18">
-                    <div class="sugg-icon"><i class="ph ph-tree" style="font-size:32px; color:var(--accent-orange)"></i></div>
+                    <img class="sugg-thumb" src="/assets/after.png" alt="Satellite observation of land cover change">
                     <div class="sugg-text">Sundarbans Degradation</div>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                 <!-- Map Overlays -->
                 <div class="map-overlay-top" style="display:flex; justify-content:space-between; width: calc(100% - 32px);">
                     <div class="map-status"><span class="pulse-dot"></span> Demo evidence layer</div>
-                    <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
+                    <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(255,255,255,0.94); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
                         <button id="map-btn-draw" class="btn-icon" title="Draw Bounding Box"><i class="ph ph-bounding-box" style="font-size:20px;"></i></button>
                         <button id="map-btn-measure" class="btn-icon" title="Measure Distance"><i class="ph ph-ruler" style="font-size:20px;"></i></button>
                         <button id="map-btn-toggle" class="btn-icon" title="Toggle Optical/SAR"><i class="ph ph-layers" style="font-size:20px;"></i></button>
@@ -297,7 +297,7 @@
                 <!-- 6. Data Provenance Graph -->
                 <div class="dash-card" style="grid-column: span 3;">
                     <h3 class="dash-title">6. Data Provenance Graph</h3>
-                    <div class="provenance-section" style="padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div class="provenance-section" style="padding: 12px; background: var(--bg-input); border-radius: 8px;">
                         <div class="dag-container" id="provenance-dag" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                             <!-- JS Populated via app.js -->
                         </div>
@@ -423,7 +423,7 @@
             
             <div style="background:var(--bg-input); padding:16px; border-radius:8px; border:1px solid var(--border-subtle);">
                 <label style="display:block; margin-bottom:8px; font-weight:600; font-size:0.85rem; color:var(--text-secondary);">ANALYST REMARKS & JUSTIFICATION</label>
-                <textarea id="analyst-notes" class="notes-input" style="width:100%; height:100px; background:transparent; border:none; color:white; outline:none; font-family:var(--font-sans); font-size:0.9rem; resize:vertical;" placeholder="Enter specific observations, confidence justifications, or secondary findings to be appended to the intelligence report..."></textarea>
+                <textarea id="analyst-notes" class="notes-input" style="width:100%; height:100px; background:transparent; border:none; color:var(--text-primary); outline:none; font-family:var(--font-sans); font-size:0.9rem; resize:vertical;" placeholder="What did you observe? Note evidence, uncertainty, or what needs field verification."></textarea>
             </div>
             
             <div class="modal-actions" style="display:flex; justify-content:flex-end; gap:16px; margin-top:8px;">

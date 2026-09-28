@@ -212,6 +212,8 @@ function initLanding() {
             $('#aoi-select').value = card.dataset.aoi;
             if (card.dataset.start) $('#date-start').value = card.dataset.start;
             if (card.dataset.end) $('#date-end').value = card.dataset.end;
+            const advancedSettings = $('.advanced-settings');
+            if (advancedSettings) advancedSettings.open = true;
             updateParsedChips(card.dataset.query);
             showToast('Parameters loaded. Click Execute Search.', 'info');
         });
