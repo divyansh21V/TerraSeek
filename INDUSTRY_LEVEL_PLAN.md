@@ -46,6 +46,70 @@ Turn a deferred finding into a compact field task: coordinates, map snapshot, ob
 
 Expose sensor resolution, acquisition conditions, detector version, known failure modes, and validation coverage beside every evidence package.
 
+## SIH competitive edge
+
+`[DECISION]` TerraSeek should be presented as an **evidence-to-action system for Indian field teams**, not as another satellite image viewer or generic AI chatbot. The winning demo should make one decision auditable from natural-language request to field-ready handoff.
+
+### Signature features
+
+| Feature | User value | Why it is distinct | Demo moment |
+|---|---|---|---|
+| Evidence Ledger | Every conclusion shows its source image, index, processing step, and analyst action | Turns AI output into an inspectable chain of custody | Open one finding and trace it back to the exact STAC item and detector version |
+| Change Fingerprint | Summarizes a change using spectral, spatial, temporal, and quality signals | A compact, explainable alternative to a single opaque confidence score | Show “construction-like” change separated from seasonal vegetation or cloud noise |
+| False-Alarm Copilot | Lists likely confounders and the test used to rule each one in or out | Makes uncertainty useful instead of hiding it | Toggle cloud, tide, shadow, and registration checks before accepting a finding |
+| Field Mission Handoff | Converts a finding into a shareable verification brief with coordinates, evidence, and a question to answer | Connects remote sensing to action on the ground | Export a field task for a district officer or disaster-response team |
+| Offline Evidence Pack | Downloads a self-contained, signed package that can be reviewed without network access | Fits low-connectivity government and field environments | Disable network and replay the same result from the exported package |
+| India-first workflow presets | Ready-to-run investigations for encroachment, flood impact, crop stress, mining, and coastal change | Shows immediate public-sector relevance instead of a blank canvas | Select a district preset and complete the investigation in under two minutes |
+
+### The judge-facing narrative
+
+1. **Ask**: “Find new construction near this protected area between two dates.”
+2. **Ground**: TerraSeek translates the request into AOI, dates, sensor, cloud threshold, and an explainable search plan.
+3. **Prove**: The result shows aligned imagery, change fingerprint, source provenance, temporal persistence, and false-alarm checks.
+4. **Decide**: The analyst accepts, rejects, or defers the finding with a reason.
+5. **Act**: TerraSeek generates a signed evidence pack and field-verification handoff that another officer can replay offline.
+
+### Prioritization for the hackathon
+
+#### Must ship in the judging build
+
+- Evidence Ledger UI with source IDs, processing steps, timestamps, and detector version.
+- Change Fingerprint with channel-level scores for spectral, temporal, spatial, quality, and confounder evidence.
+- False-Alarm Copilot with at least three deterministic checks: cloud/quality, seasonal persistence, and registration offset.
+- Field Mission Handoff export containing coordinates, map snapshot, uncertainty, observation question, and evidence links.
+- Three India-relevant presets: flood impact, illegal construction/encroachment, and crop or vegetation stress.
+- Honest demo/live labels and a complete empty, loading, insufficient-evidence, and error state.
+
+#### Strong differentiators if time remains
+
+- Offline replay of an exported evidence package.
+- Hindi and English query examples with terminology normalization for district, tehsil, village, and survey number.
+- “Why this source?” comparison showing why Sentinel-1, Sentinel-2, or Landsat was selected.
+- Human feedback loop: analyst corrections become evaluation cases for future detector versions.
+
+#### Defer until after the hackathon
+
+- Full multi-tenant authentication and organization administration.
+- Large-scale distributed raster processing and provider billing orchestration.
+- Custom model training, mobile apps, and real-time satellite tasking.
+
+### Success measures for the final demo
+
+`[ASSUMPTION]` Use measurable outcomes to make the pitch credible:
+
+- Time from plain-language request to first ranked evidence: under 60 seconds on the demo fixture.
+- Time from first result to a justified decision: under 3 minutes.
+- Every accepted or deferred result has a visible evidence gap or supporting channel.
+- A reviewer can reproduce the same result from the exported package without the original browser session.
+- At least three confounder cases are correctly surfaced in the fixture evaluation set.
+
+### Product guardrails
+
+- Never call a fixture result “live telemetry.”
+- Never collapse uncertainty into one AI-generated score without showing the contributing channels.
+- Never export a finding without source identifiers, parameters, limitations, and detector version.
+- Keep an analyst in the loop for any operational or enforcement decision.
+
 ## Delivery sequence
 
 ### Slice A — Trustworthy Product Zero
