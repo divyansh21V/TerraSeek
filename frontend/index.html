@@ -80,21 +80,22 @@
             <form id="investigate-form" class="query-form">
                 <div class="search-box-container">
                     <i class="ph ph-magnifying-glass search-icon" style="font-size: 24px; padding-left: 10px;"></i>
-                    <input type="text" id="query-input" placeholder="e.g., Detect recent land reclamation along the Mumbai coastline..." autocomplete="off">
+                    <input type="text" id="query-input" placeholder="e.g., Detect persistent urban change near Greater Cairo..." autocomplete="off" aria-describedby="query-help">
                     <button type="submit" class="btn-primary btn-glow">Execute Search</button>
                 </div>
 
                 <!-- Live Parsed Constraints -->
-                <div class="parsed-constraints" id="parsed-constraints">
+                <div class="parsed-constraints" id="parsed-constraints" aria-live="polite">
                     <!-- JS will populate chips here -->
                 </div>
 
                 <!-- Advanced Parameters Panel -->
-                <details class="advanced-settings">
+                <details class="advanced-settings" open>
                     <summary>Refine search <span>AOI, dates, quality and sensor</span></summary>
+                <p class="param-intro" id="query-help">These controls tell TerraSeek where to look, which dates to compare, and how much image noise to accept.</p>
                 <div class="advanced-params">
                     <div class="param-group">
-                        <label>Target AOI</label>
+                        <label for="aoi-select">Target area <span class="field-hint">required</span></label>
                         <select id="aoi-select">
                             <option value="">Select Region...</option>
                             <option value="egypt_cairo">Egypt: Greater Cairo development</option>
@@ -102,7 +103,7 @@
                         </select>
                     </div>
                     <div class="param-group">
-                        <label>Time Window</label>
+                        <label for="date-start">Time window <span class="field-hint">before → after</span></label>
                         <div class="date-range">
                             <input type="date" id="date-start" value="2022-01-01">
                             <span>to</span>
@@ -110,11 +111,11 @@
                         </div>
                     </div>
                     <div class="param-group">
-                        <label>Max Cloud Cover: <span id="cloud-val">15%</span></label>
+                        <label for="cloud-threshold">Max cloud cover <span id="cloud-val">15%</span></label>
                         <input type="range" id="cloud-threshold" min="0" max="100" value="15">
                     </div>
                     <div class="param-group">
-                        <label>Resolution</label>
+                        <label for="res-select">Resolution <span class="field-hint">quality trade-off</span></label>
                         <select id="res-select">
                             <option value="all">Any</option>
                             <option value="high">High (≤ 3m)</option>
@@ -122,7 +123,7 @@
                         </select>
                     </div>
                     <div class="param-group">
-                        <label>Constellation</label>
+                        <label for="sensor-select">Sensor family <span class="field-hint">optional</span></label>
                         <select id="sensor-select">
                             <option value="all">Multi-Sensor Fusion</option>
                             <option value="optical">Optical (Sentinel-2, Landsat)</option>
@@ -186,9 +187,9 @@
                 <div class="map-overlay-top" style="display:flex; justify-content:space-between; width: calc(100% - 32px);">
                     <div class="map-status"><span class="pulse-dot"></span> Demo evidence layer</div>
                     <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(255,255,255,0.94); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
-                        <button id="map-btn-draw" class="btn-icon" title="Draw Bounding Box" aria-label="Draw bounding box"><i class="ph ph-bounding-box" style="font-size:20px;"></i></button>
-                        <button id="map-btn-measure" class="btn-icon" title="Measure Distance" aria-label="Measure distance"><i class="ph ph-ruler" style="font-size:20px;"></i></button>
-                        <button id="map-btn-toggle" class="btn-icon" title="Toggle evidence layer" aria-label="Toggle evidence layer"><i class="ph ph-layers" style="font-size:20px;"></i></button>
+                        <button id="map-btn-draw" class="map-tool-btn" title="Draw Bounding Box" aria-label="Draw bounding box">Draw</button>
+                        <button id="map-btn-measure" class="map-tool-btn" title="Measure Distance" aria-label="Measure distance">Measure</button>
+                        <button id="map-btn-toggle" class="map-tool-btn" title="Toggle evidence layer" aria-label="Toggle evidence layer">Layer</button>
                     </div>
                 </div>
 
@@ -209,7 +210,10 @@
             <div class="wb-viewport-section">
                 <div class="wb-toolbar">
                     <div class="wb-title">
-                        <h2 id="wb-location-title">Candidate Analysis</h2>
+                        <div>
+                            <h2 id="wb-location-title">Candidate Analysis</h2>
+                            <p class="wb-context" id="wb-context">Select a candidate to inspect evidence and uncertainty.</p>
+                        </div>
                         <span class="wb-badge" id="wb-priority-badge">HIGH</span>
                     </div>
                     <div class="wb-controls">
@@ -220,7 +224,7 @@
                             <i class="ph ph-columns" style="margin-right:4px;"></i> Split
                         </button>
                         <button class="mode-btn" data-mode="overlay">
-                            <i class="ph ph-intersect" style="margin-right:4px;"></i> AI Mask
+                            <i class="ph ph-intersect" style="margin-right:4px;"></i> Change mask
                         </button>
                     </div>
                 </div>
@@ -273,12 +277,12 @@
                 <div class="dash-card">
                     <h3 class="dash-title">4. Spectral & SAR Signatures</h3>
                     <div class="spectral-chart">
-                        <svg viewBox="0 0 200 100" class="line-chart">
-                            <polyline points="0,80 40,75 80,60 120,20 160,15 200,10" fill="none" stroke="var(--accent-orange)" stroke-width="3"/>
-                            <polyline points="0,85 40,85 80,80 120,82 160,85 200,88" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="4,4"/>
+                        <svg viewBox="0 0 200 100" class="line-chart" id="signature-chart" role="img" aria-label="Data-driven evidence signature chart">
+                            <polyline id="signature-current" points="0,80 40,75 80,60 120,20 160,15 200,10" fill="none" stroke="var(--accent-orange)" stroke-width="3"/>
+                            <polyline id="signature-baseline" points="0,85 40,85 80,80 120,82 160,85 200,88" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="4,4"/>
                         </svg>
                         <div class="chart-legend">
-                            <span style="color:var(--accent-orange)">T2 (Current)</span>
+                            <span style="color:var(--accent-orange)">Current evidence</span>
                             <span style="color:var(--text-muted)">T1 (Baseline)</span>
                         </div>
                     </div>

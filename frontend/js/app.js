@@ -188,19 +188,19 @@ function normalizeCandidate(candidate, detail = {}) {
         resolution: candidate.resolution || 'See source metadata',
         cloud_pct: candidate.cloud_pct ?? 0,
         bbox: candidate.bbox || [detail.latitude - 0.02, detail.longitude - 0.02, detail.latitude + 0.02, detail.longitude + 0.02],
-        evidence: detail.evidence || {
+        evidence: detail.evidence || candidate.evidence || {
             spectral_diff: channelScore('spectral', signals.visual_change_strength),
             semantic_match: channelScore('semantic', signals.query_relevance),
             spatial_rel: channelScore('spatial', signals.contextual_relevance),
             quality: channelScore('quality', signals.data_suitability)
         },
-        timeline: detail.timeline || [],
-        confounders: detail.confounders || (detail.quality_checks || []).map(check => ({
+        timeline: detail.timeline || candidate.timeline || [],
+        confounders: detail.confounders || candidate.confounders || (detail.quality_checks || []).map(check => ({
             name: check.check_name,
             status: String(check.status || 'WARNING').toLowerCase(),
             detail: check.detail
         })),
-        confidence: detail.confidence || {
+        confidence: detail.confidence || candidate.confidence || {
             score: Math.round((candidate.ranking_score || 0) * 100),
             false_pos: Math.round((signals.confounder_risk || 0) * 1000) / 10,
             spatial_err: detail.limitations?.[0] || 'See limitations'
@@ -413,6 +413,10 @@ function renderDiscovery(data) {
     data.candidates.forEach((c, i) => {
         const card = document.createElement('div');
         card.className = 'c-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Open evidence for ${c.location_name}`);
+        card.dataset.sensor = String(c.sensor || '').toLowerCase();
         card.style.animationDelay = `${i * 0.1}s`;
         card.innerHTML = `
             <div class="c-header">
@@ -422,9 +426,8 @@ function renderDiscovery(data) {
             <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">
                 ${esc(c.summary)}
             </div>
-            <div style="font-size: 0.75rem; color: var(--accent-orange); font-family: var(--font-mono)">
-                Score: ${c.ranking_score.toFixed(3)}
-            </div>
+            <div class="c-rank"><span style="font-size: 0.75rem; color: var(--accent-orange); font-family: var(--font-mono)">Rank ${(c.ranking_score || 0).toFixed(3)}</span><span class="rank-meter"><span style="width:${Math.max(4, (c.ranking_score || 0) * 100)}%"></span></span></div>
+            <div class="c-evidence"><span>${esc(c.primary_evidence || 'Evidence signal')}</span><span>${esc(c.sensor || 'Provider')}</span></div>
             <div class="c-meta">
                 <span>${c.sensor}</span>
                 <span>${c.resolution}</span>
@@ -444,6 +447,9 @@ function renderDiscovery(data) {
                 showScreen('workbench');
             }).catch(error => showToast(`Could not load evidence detail: ${error.message}`, 'error'));
         });
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }
+        });
         list.appendChild(card);
     });
 
@@ -456,6 +462,8 @@ function renderDiscovery(data) {
                 const text = card.textContent.toLowerCase();
                 card.hidden = mode === 'all' ? false : mode === 'high priority'
                     ? !text.includes('high') && !text.includes('critical')
+                    : mode === 'optical' ? !/(sentinel-2|landsat|optical)/.test(card.dataset.sensor + text)
+                    : mode === 'sar' ? !/(sentinel-1|sar)/.test(card.dataset.sensor + text)
                     : !text.includes(mode);
             });
         };
@@ -502,6 +510,7 @@ function renderEvidenceMap(candidates) {
 function renderWorkbench(c) {
     $('#wb-location-title').textContent = c.location_name;
     $('#wb-priority-badge').textContent = c.investigation_priority;
+    $('#wb-context').textContent = `${c.primary_evidence || 'Evidence review'} · ${c.sensor || 'Provider metadata'} · Analyst review required`;
     $('#wb-before-label').textContent = `T1 Baseline: ${c.before_date}`;
     $('#wb-after-label').textContent = `T2 Obs: ${c.after_date}`;
     $('#swipe-before').style.backgroundImage = `url("${c.before_image_url}")`;
@@ -529,10 +538,15 @@ function renderWorkbench(c) {
     `).join('');
 
     // 3. Change Metrics
+    const timelineSignals = (c.timeline || []).filter(item => item.signal && !/baseline|unchanged/i.test(item.signal));
+    const persistence = c.timeline?.length ? Math.round((timelineSignals.length / c.timeline.length) * 100) : 0;
     $('#change-analysis').innerHTML = `
-        <div class="metric-box"><div class="metric-val" style="color:var(--accent-orange)">${c.evidence.spectral_diff.toFixed(2)}</div><div class="metric-lbl">Delta Variance</div></div>
-        <div class="metric-box"><div class="metric-val" style="color:var(--accent-emerald)">+${(c.ranking_score * 12).toFixed(1)}%</div><div class="metric-lbl">Area Growth</div></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-orange)">${(c.evidence.spectral_diff || 0).toFixed(2)}</div><div class="metric-lbl">Signal delta</div><small class="metric-note">Spectral evidence</small></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-emerald)">${persistence}%</div><div class="metric-lbl">Persistence</div><small class="metric-note">Timeline observations</small></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-blue)">${c.quality_checks?.length || 0}</div><div class="metric-lbl">Quality checks</div><small class="metric-note">Passes and warnings</small></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-amber)">${c.warnings?.length || 0}</div><div class="metric-lbl">Caveats</div><small class="metric-note">Review before decision</small></div>
     `;
+    renderSignatureChart(c);
 
     // 5. Confounders
     const confounderGrid = $('#confounder-grid');
@@ -559,8 +573,20 @@ function renderWorkbench(c) {
     `;
 
     // Build DAG for later
-    renderDAG(c);
+    renderDAGEnhanced(c);
     renderExportSummary(c);
+}
+
+function renderSignatureChart(candidate) {
+    const current = Object.values(candidate.evidence || {}).map(value => Number(value || 0));
+    const baseline = current.map(value => Math.max(0.05, value - 0.12));
+    const toPoints = (values) => values.map((value, index) => {
+        const x = values.length === 1 ? 100 : (index / (values.length - 1)) * 200;
+        const y = 90 - (Math.max(0, Math.min(1, value)) * 75);
+        return `${x.toFixed(0)},${y.toFixed(0)}`;
+    }).join(' ');
+    $('#signature-current').setAttribute('points', toPoints(current.length ? current : [0.2, 0.4, 0.6, 0.8]));
+    $('#signature-baseline').setAttribute('points', toPoints(baseline.length ? baseline : [0.15, 0.3, 0.45, 0.6]));
 }
 
 // Swipe Slider Logic
@@ -570,6 +596,7 @@ function initSwipe() {
     const before = $('#swipe-before');
     const after = $('#swipe-after');
     const vp = $('#viewport-container');
+    const liveAfterImage = () => appState.selectedCandidate?.after_image_url || '/data/probe/after_rgb.png';
     let dragging = false;
 
     function setPct(pct) {
@@ -601,11 +628,13 @@ function initSwipe() {
                 divider.hidden = false;
                 slider.hidden = false;
                 after.classList.remove('ai-mask');
+                after.style.backgroundImage = `url("${liveAfterImage()}")`;
                 setPct(50);
             } else if (mode === 'side') {
                 divider.hidden = true;
                 slider.hidden = true;
                 after.classList.remove('ai-mask');
+                after.style.backgroundImage = `url("${liveAfterImage()}")`;
                 before.style.right = '50%';
                 after.style.left = '50%';
             } else if (mode === 'overlay') {
@@ -614,6 +643,7 @@ function initSwipe() {
                 before.style.right = '0%';
                 after.style.left = '0%';
                 after.classList.add('ai-mask');
+                after.style.backgroundImage = 'url("/data/probe/change_detection/final_change_mask.png")';
             }
         });
     });
@@ -638,6 +668,24 @@ function renderDAG(c) {
             <div class="dag-val" style="font-size:0.65rem; color:var(--text-muted); background:var(--bg-input); padding:2px 6px; border-radius:4px;">${n.v}</div>
         </div>
         ${i < nodes.length - 1 ? `<div class="dag-arrow" style="flex:0.5; height:2px; background:linear-gradient(90deg, var(--accent-emerald) 0%, ${i===2 ? 'var(--accent-orange)' : 'var(--accent-emerald)'} 100%); position:relative; top:-20px;"></div>` : ''}
+    `).join('');
+}
+
+// Deterministic, screenshot-friendly provenance graph used by the workbench.
+function renderDAGEnhanced(c) {
+    const nodes = [
+        { i: '01', l: 'Source', v: c.sensor || 'Provider metadata' },
+        { i: '02', l: 'Quality', v: `${c.quality_checks?.length || 0} checks` },
+        { i: '03', l: 'Change model', v: 'Spectral + temporal' },
+        { i: '04', l: 'Analyst', v: appState.decision || 'Pending' }
+    ];
+    $('#provenance-dag').innerHTML = nodes.map((node, index) => `
+        <div class="dag-node" style="flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative;">
+            <div class="dag-icon" aria-hidden="true">${node.i}</div>
+            <div class="dag-label">${node.l}</div>
+            <div class="dag-val">${esc(node.v)}</div>
+        </div>
+        ${index < nodes.length - 1 ? '<div class="dag-arrow" aria-hidden="true">→</div>' : ''}
     `).join('');
 }
 

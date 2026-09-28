@@ -105,6 +105,10 @@ The intended analyst journey is documented in [`USER_JOURNEY.md`](USER_JOURNEY.m
 
 The industry-level delivery plan, unique feature backlog, risks, and acceptance gates are in [`INDUSTRY_LEVEL_PLAN.md`](INDUSTRY_LEVEL_PLAN.md).
 
+## UI QA screenshots
+
+The latest browser smoke pass covers login, query setup, discovery, and the workbench at desktop, tablet, and mobile widths. Accepted screenshots are stored in [`artifacts/ui-qa/`](artifacts/ui-qa/).
+
 ## Current limitations
 
 - Demo mode uses a local NASA MODIS/Worldview fixture dataset. Investigation and decision records persist to SQLite by default.
