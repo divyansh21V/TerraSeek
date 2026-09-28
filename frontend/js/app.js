@@ -284,6 +284,17 @@ function renderDiscovery(data) {
     
     const list = $('#candidate-list');
     list.innerHTML = '';
+
+    if (!data.candidates.length) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="ph ph-compass-slash" style="font-size:32px; color:var(--accent-amber)"></i>
+                <h3>No credible candidates</h3>
+                <p>Widen the date window or relax the quality constraints. TerraSeek will not manufacture a result.</p>
+            </div>`;
+        $('#discovery-map').innerHTML = '<div class="empty-map">No evidence footprint for this search</div>';
+        return;
+    }
     
     data.candidates.forEach((c, i) => {
         const card = document.createElement('div');
@@ -314,6 +325,20 @@ function renderDiscovery(data) {
             showScreen('workbench');
         });
         list.appendChild(card);
+    });
+
+    $$('.filter-chip').forEach(filter => {
+        filter.onclick = () => {
+            $$('.filter-chip').forEach(item => item.classList.remove('active'));
+            filter.classList.add('active');
+            const mode = filter.textContent.trim().toLowerCase();
+            $$('.c-card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.hidden = mode === 'all' ? false : mode === 'high priority'
+                    ? !text.includes('high') && !text.includes('critical')
+                    : !text.includes(mode);
+            });
+        };
     });
 
     // Init Map

@@ -76,6 +76,11 @@
 - [x] Align analyst decision labels with the API contract
 - [x] Prevent unsupported PDF/GeoTIFF selections from producing mislabeled JSON files
 - [x] Validate investigation ownership before recording a decision
+- [x] Add configurable public STAC provider adapter
+- [x] Add SQLite persistence for investigations and analyst decisions
+- [x] Add background investigation jobs with polling endpoint
+- [x] Add optional API-key protection and HMAC export signatures
+- [x] Refresh Product Zero visual hierarchy, honesty cues, responsive layout, and empty states
 
 ### Synthetic Data
 - [ ] Write raster fixture generator script

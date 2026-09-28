@@ -39,7 +39,9 @@ def test_investigate_endpoint():
     candidate_id = data["candidates"][0]["id"]
 
     # Retrieve candidate detail
-    detail_resp = client.get(f"/api/v1/candidates/{candidate_id}?investigation_id={data['investigation_id']}")
+    detail_resp = client.get(
+        f"/api/v1/candidates/{candidate_id}?investigation_id={data['investigation_id']}"
+    )
     assert detail_resp.status_code == 200
     detail_data = detail_resp.json()
     assert detail_data["id"] == candidate_id
@@ -74,3 +76,26 @@ def test_investigate_invalid_dates():
     }
     response = client.post("/api/v1/investigate", json=payload)
     assert response.status_code == 422
+
+
+def test_health_exposes_runtime_capabilities():
+    response = client.get("/api/v1/health")
+    data = response.json()
+    assert data["mode"] == "demo_fixture"
+    assert "evidence_channels" in data["capabilities"]
+
+
+def test_async_job_lifecycle():
+    payload = {
+        "query": "Find newly built structures and urban expansion",
+        "aoi_name": "Egypt — Greater Cairo & New Administrative Capital",
+        "aoi_bbox": [29.5, 31.0, 30.5, 32.5],
+        "date_start": "2015-01-01",
+        "date_end": "2024-01-01",
+    }
+    response = client.post("/api/v1/jobs/investigate", json=payload)
+    assert response.status_code == 200
+    job_id = response.json()["id"]
+    status = client.get(f"/api/v1/jobs/{job_id}")
+    assert status.status_code == 200
+    assert status.json()["status"] in {"queued", "running", "completed"}

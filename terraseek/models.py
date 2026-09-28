@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 from enum import Enum
-from typing import Optional
 
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, Field, model_validator
 
 # --- Enumerations ---
+
 
 class AnalystDecision(str, Enum):
     CONFIRMED = "CONFIRMED"
@@ -41,6 +40,7 @@ class TimelineSignal(str, Enum):
 
 # --- Request / Response models ---
 
+
 class InvestigationRequest(BaseModel):
     query: str = Field(..., min_length=5, description="Investigation query in natural language")
     aoi_name: str = Field(..., description="Named area of interest")
@@ -52,6 +52,52 @@ class InvestigationRequest(BaseModel):
     )
     date_start: date
     date_end: date
+
+    @model_validator(mode="after")
+    def validate_investigation_bounds(self) -> InvestigationRequest:
+        """Reject malformed AOIs before they reach providers or ranking."""
+        south, west, north, east = self.aoi_bbox
+        if not (-90 <= south < north <= 90):
+            raise ValueError("aoi_bbox must use [south, west, north, east] latitude order")
+        if not (-180 <= west < east <= 180):
+            raise ValueError("aoi_bbox must use increasing longitude values")
+        if self.date_start > self.date_end:
+            raise ValueError("date_start must be before date_end")
+        return self
+
+
+class STACSearchRequest(BaseModel):
+    """Provider-neutral STAC Item Search request."""
+
+    bbox: list[float] = Field(..., min_length=4, max_length=4)
+    date_start: date
+    date_end: date
+    collections: list[str] = Field(default_factory=lambda: ["sentinel-2-l2a"])
+    max_cloud_cover: float | None = Field(default=20.0, ge=0.0, le=100.0)
+    limit: int = Field(default=25, ge=1, le=100)
+
+    @model_validator(mode="after")
+    def validate_search_bounds(self) -> STACSearchRequest:
+        west, south, east, north = self.bbox
+        if not (-180 <= west < east <= 180 and -90 <= south < north <= 90):
+            raise ValueError("bbox must be [west, south, east, north]")
+        if self.date_start > self.date_end:
+            raise ValueError("date_start must be before date_end")
+        return self
+
+
+class STACSearchResponse(BaseModel):
+    provider: str
+    catalog_url: str
+    matched: int
+    items: list[dict]
+
+
+class JobResponse(BaseModel):
+    id: str
+    status: str
+    result: dict | None = None
+    error: str | None = None
 
 
 class EvidenceItem(BaseModel):
@@ -131,8 +177,8 @@ class CandidateDetail(BaseModel):
     contextual_evidence: list[EvidenceItem]
     warnings: list[str]
 
-    analyst_decision: Optional[str] = None
-    analyst_notes: Optional[str] = None
+    analyst_decision: str | None = None
+    analyst_notes: str | None = None
 
 
 class InvestigationResponse(BaseModel):
@@ -148,7 +194,7 @@ class DecisionRequest(BaseModel):
     investigation_id: str
     candidate_id: str
     decision: AnalystDecision
-    notes: Optional[str] = None
+    notes: str | None = None
 
 
 class DecisionResponse(BaseModel):
@@ -170,3 +216,5 @@ class ExportPackage(BaseModel):
     candidates: list[CandidateDetail]
     decisions: dict[str, dict]
     system_info: dict
+    signature: str | None = None
+    signature_algorithm: str = "HMAC-SHA256"

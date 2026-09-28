@@ -8,14 +8,17 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from terraseek.routes import router
+from terraseek.storage import init_storage
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 
 app = FastAPI(
     title="TerraSeek",
     description="Evidence-backed Earth observation investigation engine",
-    version="0.1.0",
+    version="0.2.0",
 )
+
+init_storage()
 
 # API routes
 app.include_router(router, prefix="/api/v1")

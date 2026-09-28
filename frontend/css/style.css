@@ -1,32 +1,32 @@
 /* ======================================================
    TerraSeek — Enhanced Dashboard CSS
-   Warm Theme + Pro Layout
+   Calm operational theme + analyst-first layout
    ====================================================== */
 
 :root {
-    --bg-primary:      #131110; 
-    --bg-secondary:    #1C1917;
-    --bg-card:         rgba(41, 37, 36, 0.6);
-    --bg-card-solid:   #292524;
-    --bg-card-hover:   rgba(68, 64, 60, 0.85);
-    --bg-input:        rgba(28, 25, 23, 0.8);
-    --bg-glass:        rgba(41, 37, 36, 0.5);
+    --bg-primary:      #07111f;
+    --bg-secondary:    #0b1b2e;
+    --bg-card:         rgba(15, 34, 55, 0.82);
+    --bg-card-solid:   #10253b;
+    --bg-card-hover:   rgba(21, 51, 78, 0.96);
+    --bg-input:        rgba(7, 20, 34, 0.86);
+    --bg-glass:        rgba(10, 27, 45, 0.72);
 
     --text-primary:    #FAFAF9;
-    --text-secondary:  #D6D3D1;
-    --text-muted:      #A8A29E;
-    --text-dim:        #78716C;
+    --text-secondary:  #c3d2e1;
+    --text-muted:      #8fa5ba;
+    --text-dim:        #627b92;
 
-    --accent-orange:   #F97316;
-    --accent-orange-dim: rgba(249, 115, 22, 0.15);
-    --accent-rose:     #F43F5E;
-    --accent-rose-dim: rgba(244, 63, 94, 0.15);
+    --accent-orange:   #38bdf8;
+    --accent-orange-dim: rgba(56, 189, 248, 0.15);
+    --accent-rose:     #14b8a6;
+    --accent-rose-dim: rgba(20, 184, 166, 0.15);
     --accent-emerald:  #10B981;
     --accent-amber:    #F59E0B;
     --accent-blue:     #0EA5E9;
 
-    --border-subtle:   rgba(87, 83, 78, 0.6);
-    --border-card:     rgba(120, 113, 108, 0.3);
+    --border-subtle:   rgba(109, 145, 177, 0.28);
+    --border-card:     rgba(105, 158, 196, 0.26);
     
     --radius-sm: 6px;
     --radius-md: 12px;
@@ -38,7 +38,7 @@
     --font-head:  'Outfit', sans-serif;
 
     --shadow-md:  0 4px 16px rgba(0,0,0,0.4);
-    --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.15);
+    --shadow-glow: 0 0 24px rgba(56, 189, 248, 0.18);
 }
 
 [hidden] { display: none !important; }
@@ -51,6 +51,12 @@ body {
     font-family: var(--font-sans);
     line-height: 1.5;
     overflow-x: hidden;
+}
+
+button, input, select, textarea { font: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent-orange);
+    outline-offset: 3px;
 }
 
 #particle-canvas {
@@ -173,6 +179,23 @@ body {
 .hero-title { font-family: var(--font-head); font-size: 3.5rem; margin-bottom: 16px; }
 .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px; }
 
+.trust-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: -18px auto 28px;
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-family: var(--font-mono);
+}
+.trust-strip span {
+    padding: 6px 10px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: rgba(9, 24, 40, 0.68);
+}
+
 .search-box-container {
     display: flex;
     background: var(--bg-card);
@@ -251,6 +274,35 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-top: 48px;
+}
+
+.empty-state {
+    display: grid;
+    gap: 10px;
+    place-items: start;
+    margin: 28px 18px;
+    padding: 24px;
+    border: 1px dashed var(--border-card);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+}
+.empty-state h3 { color: var(--text-primary); }
+.empty-state p { font-size: 0.86rem; }
+.empty-map {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+@media (max-width: 900px) {
+    .top-nav { padding: 0 14px; }
+    .nav-breadcrumbs { display: none; }
+    .hero-section { margin: 48px auto; }
+    .hero-title { font-size: clamp(2.3rem, 9vw, 3.5rem); }
+    .advanced-params { flex-wrap: wrap; }
+    .param-group { min-width: 180px; border-right: 0; }
 }
 .suggestion-card {
     background: var(--bg-card);

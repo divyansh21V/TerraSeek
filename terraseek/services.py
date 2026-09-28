@@ -5,6 +5,10 @@ Separated from HTTP routes so the logic is testable independently.
 
 from __future__ import annotations
 
+import hashlib
+import hmac
+import json
+import os
 import uuid
 from datetime import UTC, date, datetime
 
@@ -30,12 +34,16 @@ from terraseek.models import (
     TimelineEntry,
 )
 from terraseek.ranking import compute_query_relevance, compute_ranking_score, priority_label
-
+from terraseek.storage import load_decisions, load_investigation, save_decision, save_investigation
 
 # --- In-memory session stores ---
 
 _investigations: dict[str, dict] = {}
 _decisions: dict[str, dict] = {}  # key = "{investigation_id}:{candidate_id}"
+
+
+def _now() -> str:
+    return datetime.now(UTC).isoformat().replace("+00:00", "Z")
 
 
 def _bbox_overlaps(bbox_a: list[float], bbox_b: list[float]) -> bool:
@@ -44,14 +52,10 @@ def _bbox_overlaps(bbox_a: list[float], bbox_b: list[float]) -> bool:
     s2, w2, n2, e2 = bbox_b
     if n1 < s2 or n2 < s1:
         return False
-    if e1 < w2 or e2 < w1:
-        return False
-    return True
+    return not (e1 < w2 or e2 < w1)
 
 
-def _date_ranges_overlap(
-    start_a: date, end_a: date, start_b: str, end_b: str
-) -> bool:
+def _date_ranges_overlap(start_a: date, end_a: date, start_b: str, end_b: str) -> bool:
     """Check if two date ranges overlap."""
     sb = date.fromisoformat(start_b)
     eb = date.fromisoformat(end_b)
@@ -79,6 +83,8 @@ def _build_candidate_detail(
 
     dec_key = f"{investigation_id}:{raw['id']}"
     decision_data = _decisions.get(dec_key, {})
+    if not decision_data and investigation_id != "standalone":
+        decision_data = load_decisions(investigation_id).get(raw["id"], {})
 
     evidence_channels = {
         "spectral_signal": _channel(
@@ -174,10 +180,13 @@ def run_investigation(request: InvestigationRequest) -> InvestigationResponse:
 
     # Filter by date range overlap
     raw_candidates = [
-        c for c in raw_candidates
+        c
+        for c in raw_candidates
         if _date_ranges_overlap(
-            request.date_start, request.date_end,
-            c["date_range_start"], c["date_range_end"],
+            request.date_start,
+            request.date_end,
+            c["date_range_start"],
+            c["date_range_end"],
         )
     ]
 
@@ -213,7 +222,7 @@ def run_investigation(request: InvestigationRequest) -> InvestigationResponse:
         )
 
     # Store investigation for export
-    _investigations[investigation_id] = {
+    investigation = {
         "query": request.query,
         "aoi_name": request.aoi_name,
         "aoi_bbox": request.aoi_bbox,
@@ -222,6 +231,8 @@ def run_investigation(request: InvestigationRequest) -> InvestigationResponse:
         "candidate_ids": [c["id"] for c, *_ in scored],
         "scores": {c["id"]: {"score": s, "qr": qr} for c, s, qr, _ in scored},
     }
+    _investigations[investigation_id] = investigation
+    save_investigation(investigation_id, investigation, _now())
 
     return InvestigationResponse(
         investigation_id=investigation_id,
@@ -245,7 +256,12 @@ def get_candidate_detail(
     inv_id = investigation_id or "standalone"
 
     # Recover stored scores if available
-    inv = _investigations.get(inv_id, {})
+    inv = _investigations.get(inv_id)
+    if inv is None and investigation_id:
+        inv = load_investigation(inv_id)
+        if inv:
+            _investigations[inv_id] = inv
+    inv = inv or {}
     scores = inv.get("scores", {}).get(candidate_id, {})
     qr = scores.get("qr", 0.5)
 
@@ -259,7 +275,9 @@ def get_candidate_detail(
 
 def record_decision(req: DecisionRequest) -> DecisionResponse:
     """Record an analyst decision for a candidate."""
-    investigation = _investigations.get(req.investigation_id)
+    investigation = _investigations.get(req.investigation_id) or load_investigation(
+        req.investigation_id
+    )
     if investigation is None:
         raise ValueError(f"Investigation '{req.investigation_id}' not found")
     if req.candidate_id not in investigation["candidate_ids"]:
@@ -267,13 +285,14 @@ def record_decision(req: DecisionRequest) -> DecisionResponse:
             f"Candidate '{req.candidate_id}' is not part of investigation '{req.investigation_id}'"
         )
     key = f"{req.investigation_id}:{req.candidate_id}"
-    now = datetime.now(UTC).isoformat().replace("+00:00", "Z")
+    now = _now()
 
     _decisions[key] = {
         "decision": req.decision.value,
         "notes": req.notes,
         "recorded_at": now,
     }
+    save_decision(req.investigation_id, req.candidate_id, _decisions[key], now)
 
     return DecisionResponse(
         status="recorded",
@@ -286,7 +305,7 @@ def record_decision(req: DecisionRequest) -> DecisionResponse:
 
 def export_investigation(investigation_id: str) -> ExportPackage | None:
     """Build a complete exportable evidence package."""
-    inv = _investigations.get(investigation_id)
+    inv = _investigations.get(investigation_id) or load_investigation(investigation_id)
     if inv is None:
         return None
 
@@ -298,13 +317,13 @@ def export_investigation(investigation_id: str) -> ExportPackage | None:
 
     # Collect decisions for this investigation
     inv_decisions: dict[str, dict] = {}
+    inv_decisions.update(load_decisions(investigation_id))
     for key, val in _decisions.items():
         if key.startswith(f"{investigation_id}:"):
-            cid = key.split(":", 1)[1]
-            inv_decisions[cid] = val
+            inv_decisions[key.split(":", 1)[1]] = val
 
-    return ExportPackage(
-        exported_at=datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+    package = ExportPackage(
+        exported_at=_now(),
         investigation_id=investigation_id,
         query=inv["query"],
         aoi_name=inv["aoi_name"],
@@ -325,3 +344,10 @@ def export_investigation(investigation_id: str) -> ExportPackage | None:
             ],
         },
     )
+    signing_key = os.getenv("TERRASEEK_SIGNING_KEY")
+    if signing_key:
+        unsigned = package.model_dump(exclude={"signature"})
+        canonical = json.dumps(unsigned, sort_keys=True, separators=(",", ":")).encode()
+        signature = hmac.new(signing_key.encode(), canonical, hashlib.sha256).hexdigest()
+        package = package.model_copy(update={"signature": signature})
+    return package
