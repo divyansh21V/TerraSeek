@@ -1,0 +1,12 @@
+[build]
+  command = "node scripts/netlify-build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+

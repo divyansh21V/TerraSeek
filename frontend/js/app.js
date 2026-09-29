@@ -297,6 +297,7 @@ function initLanding() {
 
     apiFetch('/aois').then((aois) => {
         appState.apiOnline = true;
+        $('#runtime-mode').textContent = 'API connected';
         const select = $('#aoi-select');
         if (!select) return;
         select.innerHTML = '<option value="">Select Region...</option>';
@@ -308,6 +309,7 @@ function initLanding() {
         });
     }).catch(() => {
         appState.apiOnline = false;
+        $('#runtime-mode').textContent = 'Local demo';
         // The mode pill already communicates this state without interrupting the workflow.
     });
 
@@ -339,7 +341,13 @@ function initLanding() {
     $('#investigate-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const aoi = $('#aoi-select').value;
-        if (!aoi) { showToast('Please select a Target AOI', 'error'); return; }
+        if (!aoi) {
+            const advancedSettings = $('.advanced-settings');
+            if (advancedSettings) advancedSettings.open = true;
+            $('#aoi-select')?.focus();
+            showToast('Select a target area before executing the search.', 'error');
+            return;
+        }
 
         const query = $('#query-input').value.trim();
         const dateStart = $('#date-start').value;
@@ -469,6 +477,7 @@ function renderDiscovery(data) {
         card.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }
         });
+        card.insertAdjacentHTML('beforeend', '<div class="c-open">Inspect evidence <span aria-hidden="true">→</span></div>');
         list.appendChild(card);
     });
 
@@ -495,10 +504,26 @@ function renderDiscovery(data) {
     const btnMeasure = $('#map-btn-measure');
     const btnToggle = $('#map-btn-toggle');
     
-    if (btnDraw) btnDraw.onclick = () => showToast('Draw mode is available in the evidence map. Click a footprint to inspect it.', 'info');
-    if (btnMeasure) btnMeasure.onclick = () => showToast('Measurement is estimated from the selected AOI footprint.', 'info');
+    if (btnDraw) btnDraw.onclick = () => {
+        const active = btnDraw.getAttribute('aria-pressed') !== 'true';
+        btnDraw.setAttribute('aria-pressed', String(active));
+        btnDraw.classList.toggle('active', active);
+        $('#discovery-map').classList.toggle('show-footprint', active);
+        showToast(active ? 'Investigation footprint shown.' : 'Investigation footprint hidden.', 'info');
+    };
+    if (btnMeasure) btnMeasure.onclick = () => {
+        const active = btnMeasure.getAttribute('aria-pressed') !== 'true';
+        btnMeasure.setAttribute('aria-pressed', String(active));
+        btnMeasure.classList.toggle('active', active);
+        $('#discovery-map').classList.toggle('show-scale', active);
+        showToast(active ? 'Approximate AOI scale shown.' : 'Approximate AOI scale hidden.', 'info');
+    };
     if (btnToggle) btnToggle.onclick = () => {
         mapState.layer = mapState.layer === 'Evidence footprint' ? 'Quality footprint' : 'Evidence footprint';
+        const active = mapState.layer === 'Quality footprint';
+        btnToggle.setAttribute('aria-pressed', String(active));
+        btnToggle.classList.toggle('active', active);
+        $('#discovery-map').classList.toggle('quality-layer', active);
         $('#map-layer-label').textContent = mapState.layer;
         showToast(`${mapState.layer} displayed.`, 'info');
     };
@@ -507,7 +532,17 @@ function renderDiscovery(data) {
 function renderEvidenceMap(candidates) {
     const map = $('#discovery-map');
     if (!map || !candidates.length) return;
-    map.innerHTML = `<div class="local-map-grid" aria-hidden="true"></div><div class="local-map-label" id="map-layer-label">Evidence footprint</div>`;
+    const first = candidates[0];
+    const bbox = first?.bbox || [];
+    const bboxLabel = bbox.length === 4 ? `${Number(bbox[0]).toFixed(3)}°N · ${Number(bbox[1]).toFixed(3)}°E` : 'Local probe coordinates';
+    map.innerHTML = `
+        <div class="local-map-grid" aria-hidden="true"></div>
+        <div class="map-aoi-frame" aria-hidden="true"></div>
+        <div class="map-measure-line" aria-hidden="true"><span>~1.5 km</span></div>
+        <div class="map-north" aria-label="North is up">N <span>↑</span></div>
+        <div class="map-legend"><span><i class="legend-dot"></i> Ranked evidence</span><span><i class="legend-outline"></i> AOI footprint</span></div>
+        <div class="local-map-label" id="map-layer-label">Evidence footprint</div>
+        <div class="map-location-label"><strong>${esc(first?.location_name || 'Selected AOI')}</strong><span>${bboxLabel}</span></div>`;
     candidates.forEach((candidate, index) => {
         const marker = document.createElement('button');
         marker.className = 'map-marker';
@@ -520,7 +555,7 @@ function renderEvidenceMap(candidates) {
         marker.onclick = () => document.querySelectorAll('.c-card')[index]?.click();
         map.appendChild(marker);
     });
-    $('#map-coords').textContent = `Evidence footprints: ${candidates.length}`;
+    $('#map-coords').textContent = `${candidates.length} ranked footprint${candidates.length === 1 ? '' : 's'} · local probe`;
 }
 
 // ============================================================
@@ -694,9 +729,10 @@ function renderDAG(c) {
 
 // Deterministic, screenshot-friendly provenance graph used by the workbench.
 function renderDAGEnhanced(c) {
+    const qualityChecks = c.quality_checks?.length || c.confounders?.length || 0;
     const nodes = [
         { i: '01', l: 'Source', v: c.sensor || 'Provider metadata' },
-        { i: '02', l: 'Quality', v: `${c.quality_checks?.length || 0} checks` },
+        { i: '02', l: 'Quality', v: `${qualityChecks} checks` },
         { i: '03', l: 'Change model', v: 'Spectral + temporal' },
         { i: '04', l: 'Analyst', v: appState.decision || 'Pending' }
     ];
@@ -777,6 +813,11 @@ function initModals() {
     });
 
     $('#btn-proceed-export').addEventListener('click', () => {
+        if (!appState.decision) {
+            showToast('Log an analyst decision before exporting.', 'error');
+            $('#decision-modal').hidden = false;
+            return;
+        }
         showScreen('export');
     });
 
@@ -852,6 +893,8 @@ function bootTerraSeek() {
     initLanding();
     initSwipe();
     initModals();
+
+    $('#btn-back-discovery')?.addEventListener('click', () => showScreen('discovery'));
     
     $$('.crumb').forEach(c => {
         c.addEventListener('click', () => {

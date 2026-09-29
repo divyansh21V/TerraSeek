@@ -15,11 +15,11 @@
 <nav class="top-nav">
     <div class="nav-brand" id="brand-home">
         <div class="brand-logo">
-            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-                <circle cx="14" cy="14" r="12" stroke="url(#grad1)" stroke-width="2" fill="none" opacity="0.8"/>
-                <circle cx="14" cy="14" r="7" stroke="url(#grad1)" stroke-width="1.5" fill="none" opacity="0.5"/>
-                <circle cx="14" cy="14" r="3" fill="url(#grad1)"/>
-                <ellipse cx="14" cy="14" rx="12" ry="5" stroke="url(#grad1)" stroke-width="1" fill="none" opacity="0.4" transform="rotate(-25 14 14)"/>
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle cx="14" cy="14" r="12" stroke="#0f766e" stroke-width="2" fill="none"/>
+                <circle cx="14" cy="14" r="7" stroke="#0f766e" stroke-width="1.5" fill="none" opacity="0.55"/>
+                <circle cx="14" cy="14" r="3" fill="#0f766e"/>
+                <ellipse cx="14" cy="14" rx="12" ry="5" stroke="#1d2a38" stroke-width="1" fill="none" opacity="0.4" transform="rotate(-25 14 14)"/>
                 <defs>
                     <linearGradient id="grad1" x1="0" y1="0" x2="28" y2="28">
                         <stop offset="0%" stop-color="#F97316"/>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="nav-actions">
-        <span class="mode-pill"><span class="mode-dot"></span> Demo workspace</span>
+        <span class="mode-pill"><span class="mode-dot"></span> <span id="runtime-mode">Local demo</span></span>
     </div>
 </nav>
 
@@ -92,7 +92,7 @@
                 </div>
 
                 <!-- Advanced Parameters Panel -->
-                <details class="advanced-settings" open>
+                <details class="advanced-settings">
                     <summary>Refine search <span>AOI, dates, quality and sensor</span></summary>
                 <p class="param-intro" id="query-help">These controls tell TerraSeek where to look, which dates to compare, and how much image noise to accept.</p>
                 <div class="advanced-params">
@@ -113,8 +113,9 @@
                         </div>
                     </div>
                     <div class="param-group">
-                        <label for="cloud-threshold">Max cloud cover <span id="cloud-val">15%</span></label>
+                        <label for="cloud-threshold"><span>Max cloud cover</span><strong id="cloud-val">15%</strong></label>
                         <input type="range" id="cloud-threshold" min="0" max="100" value="15">
+                        <span class="range-hint">Strict filter · lower is cleaner</span>
                     </div>
                     <div class="param-group">
                         <label for="res-select">Resolution <span class="field-hint">quality trade-off</span></label>
@@ -140,19 +141,19 @@
             <div class="suggestions-grid">
                 <div class="suggestion-card" data-aoi="egypt_cairo" data-query="Identify persistent urban development in Greater Cairo between 2016 and 2023." data-start="2015-01-01" data-end="2024-12-31">
                     <img class="sugg-thumb" src="/data/probe/before_rgb.png" alt="Sentinel-2 baseline image for the urban development probe">
-                    <div class="sugg-text">Cairo Urban Expansion</div>
+                    <div class="sugg-copy"><span class="sugg-kicker">Urban change</span><span class="sugg-text">Cairo Urban Expansion</span><span class="sugg-action">Use scenario →</span></div>
                 </div>
                 <div class="suggestion-card" data-aoi="amazon_altamira" data-query="Detect persistent forest clearing near Altamira in the Amazon between 2015 and 2023." data-start="2014-01-01" data-end="2024-12-31">
                     <img class="sugg-thumb" src="/data/probe/change_detection/final_change_mask.png" alt="Detected change mask for the satellite evidence probe">
-                    <div class="sugg-text">Amazon Land Clearing</div>
+                    <div class="sugg-copy"><span class="sugg-kicker">Forest monitoring</span><span class="sugg-text">Amazon Land Clearing</span><span class="sugg-action">Use scenario →</span></div>
                 </div>
                 <div class="suggestion-card" data-aoi="amazon_altamira" data-query="Compare vegetation change and possible smoke confounders in the Amazon." data-start="2014-01-01" data-end="2024-12-31">
                     <img class="sugg-thumb" src="/data/probe/change_design/z_robust_delta_ndvi.png" alt="Robust vegetation change index for the satellite evidence probe">
-                    <div class="sugg-text">Vegetation Change Review</div>
+                    <div class="sugg-copy"><span class="sugg-kicker">Confounder review</span><span class="sugg-text">Vegetation Change Review</span><span class="sugg-action">Use scenario →</span></div>
                 </div>
                 <div class="suggestion-card" data-aoi="egypt_cairo" data-query="Review the before and after evidence for large-scale surface change near Cairo." data-start="2015-01-01" data-end="2024-12-31">
                     <img class="sugg-thumb" src="/data/probe/after_rgb.png" alt="Sentinel-2 observation image for the urban development probe">
-                    <div class="sugg-text">Evidence Replay</div>
+                    <div class="sugg-copy"><span class="sugg-kicker">Audit replay</span><span class="sugg-text">Evidence Replay</span><span class="sugg-action">Use scenario →</span></div>
                 </div>
             </div>
         </div>
@@ -169,6 +170,7 @@
                     <h2>Intelligence Candidates</h2>
                     <span class="badge" id="result-count">0 found</span>
                 </div>
+                <p class="sidebar-intro">Ranked by evidence strength, data quality, persistence, and confounder risk.</p>
                 
                 <div class="filter-bar">
                     <button class="filter-chip active">All</button>
@@ -189,9 +191,9 @@
                 <div class="map-overlay-top" style="display:flex; justify-content:space-between; width: calc(100% - 32px);">
                     <div class="map-status"><span class="pulse-dot"></span> Demo evidence layer</div>
                     <div class="map-toolbar" style="display:flex; gap:12px; background: rgba(255,255,255,0.94); padding: 8px; border-radius: 12px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);">
-                        <button id="map-btn-draw" class="map-tool-btn" title="Draw Bounding Box" aria-label="Draw bounding box">Draw</button>
-                        <button id="map-btn-measure" class="map-tool-btn" title="Measure Distance" aria-label="Measure distance">Measure</button>
-                        <button id="map-btn-toggle" class="map-tool-btn" title="Toggle evidence layer" aria-label="Toggle evidence layer">Layer</button>
+                        <button id="map-btn-draw" class="map-tool-btn" title="Show investigation footprint" aria-label="Show investigation footprint" aria-pressed="false">Footprint</button>
+                        <button id="map-btn-measure" class="map-tool-btn" title="Show estimated footprint width" aria-label="Show estimated footprint width" aria-pressed="false">Scale</button>
+                        <button id="map-btn-toggle" class="map-tool-btn" title="Toggle evidence and quality layers" aria-label="Toggle evidence and quality layers" aria-pressed="false">Quality</button>
                     </div>
                 </div>
 
@@ -213,11 +215,13 @@
                 <div class="wb-toolbar">
                     <div class="wb-title">
                         <div>
+                            <div class="section-kicker">Evidence workbench</div>
                             <h2 id="wb-location-title">Candidate Analysis</h2>
                             <p class="wb-context" id="wb-context">Select a candidate to inspect evidence and uncertainty.</p>
                         </div>
                         <span class="wb-badge" id="wb-priority-badge">HIGH</span>
                     </div>
+                    <button class="btn-secondary wb-back" id="btn-back-discovery" type="button">Back to candidates</button>
                     <div class="wb-controls">
                         <button class="mode-btn active" data-mode="swipe">
                             <i class="ph ph-arrows-out-line-horizontal" style="margin-right:4px;"></i> Swipe
@@ -324,7 +328,7 @@
             <!-- Analyst Action Bar -->
             <div class="action-bar-bottom">
                 <button class="btn-secondary" id="btn-open-decision">Log Analyst Decision...</button>
-                <button class="btn-primary" id="btn-proceed-export">Finalize & Export Report ➔</button>
+                <button class="btn-primary" id="btn-proceed-export">Review decision & export ➔</button>
             </div>
         </div>
     </section>

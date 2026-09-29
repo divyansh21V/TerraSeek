@@ -39,6 +39,7 @@ Every result exposes six inspectable channels instead of relying on an uncalibra
 - Background investigation jobs with status polling
 - Optional API-key protection and HMAC-signed evidence packages
 - Docker entry point and GitHub Actions for Python and JavaScript checks
+- Sentinel-2 synthetic-data contract covering L2A-like provenance, band resolution, SCL-like quality, indices, ground truth, and validation gates
 
 ## Why judges remember TerraSeek
 
@@ -100,6 +101,18 @@ The repository includes [`render.yaml`](render.yaml) for a Docker web service wi
 
 This is a hackathon deployment profile. For production multi-user workloads, replace SQLite with PostgreSQL/PostGIS and the in-process job runner with a durable worker queue.
 
+### Deploy the judging UI on Netlify
+
+The repository includes [`netlify.toml`](netlify.toml) and a zero-dependency Node build script. Netlify copies `frontend/` plus the local probe assets into `dist/`, so the offline judging journey remains usable without a Python server:
+
+```bash
+netlify login
+netlify init       # choose an existing site or create a new one
+netlify deploy --prod
+```
+
+The Netlify site is the static demo surface. It uses the explicit local fixture fallback because FastAPI, SQLite, background jobs, and signing secrets are not available in a static deployment. Use the Render/Docker service when you need the live API path. After deployment, verify the query → discovery → workbench → decision → export journey and confirm that `/data/probe/` assets load.
+
 ### Tests and checks
 
 ```bash
@@ -133,6 +146,8 @@ The intended analyst journey is documented in [`USER_JOURNEY.md`](USER_JOURNEY.m
 `SEARCH → RESULTS → SELECT → EVIDENCE → BEFORE/AFTER → TIMELINE → CHANGE MASK → VERIFICATION → PROVENANCE → EXPORT`
 
 The industry-level delivery plan, unique feature backlog, risks, and acceptance gates are in [`INDUSTRY_LEVEL_PLAN.md`](INDUSTRY_LEVEL_PLAN.md).
+
+The Sentinel-2 synthetic-data thesis is implemented as a project contract in [`docs/SENTINEL2_SYNTHETIC_DATA_SPEC.md`](docs/SENTINEL2_SYNTHETIC_DATA_SPEC.md).
 
 ## UI QA screenshots
 

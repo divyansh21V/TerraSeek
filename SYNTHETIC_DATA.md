@@ -111,3 +111,6 @@ For integration tests that need realistic (but small) data:
 - Testing → [TESTING.md](TESTING.md)
 - Data model → [DATA_MODEL.md](DATA_MODEL.md)
 - AI evaluation → [AI_SYSTEM.md](AI_SYSTEM.md)
+# Synthetic data contract
+
+The implementation contract derived from the Sentinel-2 research thesis is maintained in [`docs/SENTINEL2_SYNTHETIC_DATA_SPEC.md`](docs/SENTINEL2_SYNTHETIC_DATA_SPEC.md). It is the source of truth for synthetic provenance, band/resolution handling, quality masks, indices, ground truth, and validation gates.
