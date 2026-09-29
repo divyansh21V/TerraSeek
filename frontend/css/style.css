@@ -705,3 +705,110 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 
 .btn-decision.active { transform: scale(1.05); box-shadow: 0 0 15px currentColor; border-color: currentColor !important; background: rgba(255,255,255,0.1) !important; }
 
+/* ======================================================
+   TerraSeek operations-console refinement
+   Calm, compact, evidence-first, and presentation-safe.
+   ====================================================== */
+:root {
+    --bg-primary: #f3f5f7;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-solid: #ffffff;
+    --bg-card-hover: #f5faf9;
+    --bg-input: #f8fafb;
+    --bg-glass: rgba(255,255,255,.96);
+    --text-primary: #1d2a38;
+    --text-secondary: #506174;
+    --text-muted: #758496;
+    --text-dim: #a0adba;
+    --accent-orange: #0f766e;
+    --accent-orange-dim: rgba(15,118,110,.11);
+    --accent-rose: #b5475d;
+    --accent-rose-dim: rgba(181,71,93,.11);
+    --border-subtle: #d9e1e7;
+    --border-card: #d4dee5;
+    --shadow-md: 0 4px 14px rgba(25,48,66,.07);
+    --shadow-glow: 0 4px 14px rgba(15,118,110,.12);
+}
+
+#particle-canvas { display: none; }
+.screen { animation: none; opacity: 1; }
+.hero-section { max-width: 980px; margin: 46px auto 0; }
+.hero-eyebrow, .search-label { color: var(--accent-orange); font: 700 .7rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.hero-eyebrow { margin-bottom: 14px; }
+.hero-title { max-width: 760px; margin: 0 auto 14px; font-size: clamp(2.45rem, 5vw, 3.65rem); letter-spacing: -.045em; }
+.text-gradient { background: none; color: var(--accent-orange); -webkit-text-fill-color: currentColor; }
+.hero-subtitle { max-width: 690px; margin: 0 auto 24px; font-size: 1rem; }
+.trust-strip { gap: 8px; margin-bottom: 28px; }
+.trust-strip span { background: #e8f1f0; border: 1px solid #c9dfdc; color: #35615e; padding: 6px 10px; border-radius: 5px; font: 700 .64rem var(--font-mono); letter-spacing: .04em; }
+.query-form { background: var(--bg-secondary); border: 1px solid var(--border-card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-md); text-align: left; }
+.search-label { margin: 0 0 10px 2px; color: var(--text-secondary); letter-spacing: .08em; }
+.search-box-container { box-shadow: none; border-radius: 8px; padding: 8px; }
+.search-box-container input { font-size: 1rem; }
+.btn-primary { background: var(--accent-orange); border-radius: 7px; box-shadow: none; }
+.btn-primary:hover { opacity: .94; transform: none; }
+.btn-glow { box-shadow: none; }
+.advanced-settings { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border-subtle); }
+.advanced-settings summary { color: var(--text-primary); }
+.advanced-settings summary span { font-size: .76rem; }
+.advanced-params { display: grid; grid-template-columns: 1.2fr 1.45fr 1.1fr 1fr 1.2fr; gap: 18px; }
+.advanced-params .param-group { min-width: 0; border-right: 1px solid var(--border-subtle); padding-right: 16px; }
+.advanced-params .param-group:last-child { border-right: none; padding-right: 0; }
+.advanced-params .param-group > label { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; line-height: 1.15; }
+.advanced-params .field-hint { margin-left: 0; }
+.suggestions-grid { margin-top: 24px; gap: 12px; }
+.suggestion-card { padding: 12px; border-radius: 9px; transition: none; }
+.suggestion-card:hover { transform: none; box-shadow: none; }
+.sugg-thumb { width: 68px; height: 48px; }
+.discovery-sidebar { width: 360px; }
+.sidebar-header { padding: 20px; }
+.candidate-list { padding: 14px; }
+.c-card { padding: 14px; border-radius: 9px; }
+.c-card:hover, .c-card.selected { border-color: var(--accent-orange); box-shadow: 0 0 0 2px var(--accent-orange-dim); }
+.local-map-grid { background-image: linear-gradient(rgba(80,97,116,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(80,97,116,.06) 1px, transparent 1px); background-size: 48px 48px; background-color: #edf2f4; }
+.local-map-grid::after { display: none; }
+.map-marker { box-shadow: 0 2px 8px rgba(15,118,110,.2); }
+.map-status { box-shadow: none; }
+.wb-viewport-section { padding: 20px 24px 18px; }
+.wb-title h2 { font-size: 1.3rem; }
+.wb-controls { box-shadow: none; border-radius: 8px; }
+.mode-btn { transition: none; }
+.mode-btn::before { background: var(--accent-orange); transition: none; }
+.mode-btn.active::before { box-shadow: none; }
+.viewport-container { height: 410px; border-radius: 10px; box-shadow: 0 6px 18px rgba(25,48,66,.12); }
+.swipe-divider { box-shadow: none; }
+.swipe-handle { box-shadow: none; }
+.wb-dashboard { gap: 16px; padding: 20px 24px 24px; }
+.dash-card { border-radius: 10px; padding: 18px; box-shadow: none; }
+.dash-title { font-size: .75rem; letter-spacing: .08em; }
+.timeline-container { gap: 10px; }
+.tl-node { min-width: 138px; }
+.action-bar-bottom { padding: 12px 24px; }
+.toast { animation: none; }
+.toast-container { gap: 6px; }
+.modal-box { border-radius: 10px; }
+.btn-decision.active { transform: none; box-shadow: none; }
+#btn-save-decision { background: var(--accent-orange) !important; }
+.btn-decision { background: #fff !important; }
+.btn-decision.verify.active { background: #e8f5ef !important; }
+.btn-decision.reject.active { background: #faecef !important; }
+.btn-decision.uncertain.active { background: #fff6df !important; }
+
+@media (max-width: 1080px) {
+    .advanced-params { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .advanced-params .param-group:nth-child(3) { border-right: none; padding-right: 0; }
+}
+
+@media (max-width: 760px) {
+    .hero-section { margin-top: 28px; }
+    .hero-eyebrow { font-size: .62rem; }
+    .hero-title { font-size: 2.35rem; }
+    .query-form { padding: 16px; }
+    .advanced-params { grid-template-columns: 1fr; gap: 14px; }
+    .advanced-params .param-group { border-right: none; padding: 0 0 14px; border-bottom: 1px solid var(--border-subtle); }
+    .advanced-params .param-group:last-child { border-bottom: none; padding-bottom: 0; }
+    .discovery-sidebar { width: 100%; max-height: 45vh; }
+    .discovery-layout { flex-direction: column; }
+    .discovery-map-container { min-height: 55vh; }
+}
+

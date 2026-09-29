@@ -136,11 +136,29 @@ const OFFLINE_FIXTURES = {
 
 // Keep the no-server path aligned with the live AOI vocabulary.
 OFFLINE_FIXTURES.egypt_cairo = {
-    candidates: [{ ...OFFLINE_FIXTURES.mumbai_coastal.candidates[0], location_name: 'Greater Cairo development probe', sensor: 'Sentinel-2 probe', primary_evidence: 'Surface change + persistence' }],
+    candidates: [{ ...OFFLINE_FIXTURES.mumbai_coastal.candidates[0], id: 'TSK-CAI-001', location_name: 'Greater Cairo development probe', summary: 'Persistent surface change consistent with large-scale urban expansion; analyst review is required before attributing cause.', sensor: 'Sentinel-2 probe', primary_evidence: 'Surface change + persistence', before_date: '2021-02-15', after_date: '2024-03-10', bbox: [29.92, 31.25, 30.02, 31.38], timeline: [
+        { date: '2021-02-15', signal: 'baseline', obs: 'Sparse desert fringe and established road grid', src: 'Sentinel-2' },
+        { date: '2022-05-10', signal: 'weak', obs: 'New grading and construction footprints emerge', src: 'Sentinel-2' },
+        { date: '2023-01-20', signal: 'strong', obs: 'Built-up blocks and arterial roadworks expand', src: 'Sentinel-2' },
+        { date: '2024-03-10', signal: 'persistent', obs: 'Urban surface change remains visible across the AOI', src: 'Sentinel-2' },
+    ], confounders: [
+        { name: 'Dust / Haze', status: 'warning', detail: 'Dry-season haze can soften edges; cloud and haze screening applied.' },
+        { name: 'Seasonal Vegetation', status: 'clear', detail: 'Low vegetation baseline reduces seasonal-change ambiguity.' },
+        { name: 'Co-registration', status: 'low', detail: 'Image alignment is within the local probe tolerance.' }
+    ] }],
     query_tags: ['Egypt', 'Urban expansion']
 };
 OFFLINE_FIXTURES.amazon_altamira = {
-    candidates: [{ ...OFFLINE_FIXTURES.himalayan_dam.candidates[0], location_name: 'Altamira land-clearing probe', sensor: 'Sentinel-2 probe', primary_evidence: 'Vegetation loss + persistence' }],
+    candidates: [{ ...OFFLINE_FIXTURES.himalayan_dam.candidates[0], id: 'TSK-AMZ-001', location_name: 'Altamira land-clearing probe', summary: 'Persistent vegetation loss with linear clearing patterns; agriculture, logging, and infrastructure remain possible explanations.', sensor: 'Sentinel-2 probe', primary_evidence: 'Vegetation loss + persistence', before_date: '2021-02-15', after_date: '2024-03-10', bbox: [-3.35, -52.35, -3.20, -52.15], timeline: [
+        { date: '2021-02-15', signal: 'baseline', obs: 'Continuous forest canopy with limited clearings', src: 'Sentinel-2' },
+        { date: '2022-05-10', signal: 'weak', obs: 'Linear canopy breaks appear along access tracks', src: 'Sentinel-2' },
+        { date: '2023-01-20', signal: 'strong', obs: 'Clearing geometry expands into connected parcels', src: 'Sentinel-2' },
+        { date: '2024-03-10', signal: 'persistent', obs: 'Vegetation loss remains visible after seasonal review', src: 'Sentinel-2' },
+    ], confounders: [
+        { name: 'Cloud / Haze', status: 'warning', detail: 'Tropical cloud screening removes incomplete observations.' },
+        { name: 'Seasonal Phenology', status: 'warning', detail: 'Dry-season timing is controlled before comparing canopy signal.' },
+        { name: 'Co-registration', status: 'low', detail: 'Image alignment is within the local probe tolerance.' }
+    ] }],
     query_tags: ['Amazon', 'Land clearing']
 };
 
@@ -249,6 +267,7 @@ function showScreen(name) {
 
 function showToast(message, type = 'info') {
     const container = $('#toast-container');
+    container.querySelectorAll('.toast').forEach(existing => existing.remove());
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
@@ -257,7 +276,7 @@ function showToast(message, type = 'info') {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(100%)';
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 2200);
 }
 
 // ============================================================
@@ -289,7 +308,7 @@ function initLanding() {
         });
     }).catch(() => {
         appState.apiOnline = false;
-        showToast('Offline demo mode: using bundled evidence fixtures.', 'info');
+        // The mode pill already communicates this state without interrupting the workflow.
     });
 
     // Dynamic Query Parsing
@@ -540,11 +559,13 @@ function renderWorkbench(c) {
     // 3. Change Metrics
     const timelineSignals = (c.timeline || []).filter(item => item.signal && !/baseline|unchanged/i.test(item.signal));
     const persistence = c.timeline?.length ? Math.round((timelineSignals.length / c.timeline.length) * 100) : 0;
+    const qualityChecks = c.quality_checks?.length || c.confounders?.length || 0;
+    const caveats = c.warnings?.length || c.confounders?.filter(item => item.status && item.status !== 'clear').length || 0;
     $('#change-analysis').innerHTML = `
         <div class="metric-box"><div class="metric-val" style="color:var(--accent-orange)">${(c.evidence.spectral_diff || 0).toFixed(2)}</div><div class="metric-lbl">Signal delta</div><small class="metric-note">Spectral evidence</small></div>
         <div class="metric-box"><div class="metric-val" style="color:var(--accent-emerald)">${persistence}%</div><div class="metric-lbl">Persistence</div><small class="metric-note">Timeline observations</small></div>
-        <div class="metric-box"><div class="metric-val" style="color:var(--accent-blue)">${c.quality_checks?.length || 0}</div><div class="metric-lbl">Quality checks</div><small class="metric-note">Passes and warnings</small></div>
-        <div class="metric-box"><div class="metric-val" style="color:var(--accent-amber)">${c.warnings?.length || 0}</div><div class="metric-lbl">Caveats</div><small class="metric-note">Review before decision</small></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-blue)">${qualityChecks}</div><div class="metric-lbl">Quality checks</div><small class="metric-note">Passes and warnings</small></div>
+        <div class="metric-box"><div class="metric-val" style="color:var(--accent-amber)">${caveats}</div><div class="metric-lbl">Caveats</div><small class="metric-note">Review before decision</small></div>
     `;
     renderSignatureChart(c);
 

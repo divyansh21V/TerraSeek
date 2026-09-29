@@ -140,6 +140,8 @@ The latest browser smoke pass covers login, query setup, discovery, and the work
 
 The most presentation-ready frame is [`desktop-workbench-ppt.png`](artifacts/ui-qa/desktop-workbench-ppt.png).
 
+The latest visual refinement pass is captured in [`artifacts/ui-audit-after/`](artifacts/ui-audit-after/): query setup, discovery, workbench, change mask, export manifest, and a presentation-sized workbench frame. The flow was rechecked at 1440px, 768px, and 390px widths with no horizontal overflow.
+
 ## Current limitations
 
 - Demo mode uses a local NASA MODIS/Worldview fixture dataset. Investigation and decision records persist to SQLite by default.
